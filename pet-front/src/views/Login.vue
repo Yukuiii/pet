@@ -57,88 +57,82 @@ const goToRegister = () => {
     </div>
 
     <!-- 右侧登录区域 -->
-    <div class="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-4 py-12">
-      <div class="w-full max-w-md space-y-8">
+    <div class="w-full lg:w-1/2 flex items-center justify-center bg-white px-6 py-12">
+      <div class="w-full max-w-sm">
         <!-- 标题 -->
-        <div class="text-center">
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+        <div class="mb-8">
+          <h1 class="text-2xl font-semibold text-gray-900">
             欢迎回来
           </h1>
-          <p class="mt-2 text-sm text-gray-600">
-            登录您的账户
+          <p class="mt-1 text-sm text-gray-500">
+            请登录您的账户继续
           </p>
         </div>
 
-        <!-- 登录表单卡片 -->
-        <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
-          <form @submit.prevent="handleSubmit" class="space-y-6">
-            <!-- 用户名 -->
-            <div class="space-y-2">
-              <label for="username" class="block text-sm font-medium text-gray-700">
-                用户名
-              </label>
-              <input
-                id="username"
-                v-model="form.username"
-                type="text"
-                required
-                placeholder="请输入用户名"
-                class="w-full h-10 px-3 rounded-md border border-gray-300 bg-white text-sm
-                       placeholder:text-gray-400 focus:outline-none focus:ring-2
-                       focus:ring-gray-900 focus:border-transparent transition-colors"
-              />
-            </div>
+        <!-- 登录表单 -->
+        <form @submit.prevent="handleSubmit" class="space-y-5">
+          <!-- 用户名 -->
+          <div class="space-y-1.5">
+            <label for="username" class="block text-sm font-medium text-gray-700">
+              用户名
+            </label>
+            <input
+              id="username"
+              v-model="form.username"
+              type="text"
+              required
+              placeholder="请输入用户名"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm
+                     placeholder:text-gray-400 focus:outline-none focus:ring-2
+                     focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+            />
+          </div>
 
-            <!-- 密码 -->
-            <div class="space-y-2">
+          <!-- 密码 -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
               <label for="password" class="block text-sm font-medium text-gray-700">
                 密码
               </label>
-              <input
-                id="password"
-                v-model="form.password"
-                type="password"
-                required
-                placeholder="请输入密码"
-                class="w-full h-10 px-3 rounded-md border border-gray-300 bg-white text-sm
-                       placeholder:text-gray-400 focus:outline-none focus:ring-2
-                       focus:ring-gray-900 focus:border-transparent transition-colors"
-              />
-            </div>
-
-            <!-- 登录按钮 -->
-            <button
-              type="submit"
-              :disabled="loading"
-              class="w-full h-10 px-4 rounded-md bg-gray-900 text-white text-sm font-medium
-                     hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900
-                     focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed
-                     transition-colors"
-            >
-              {{ loading ? '登录中...' : '登录' }}
-            </button>
-          </form>
-
-          <!-- 分隔线 -->
-          <div class="mt-6 flex items-center">
-            <div class="flex-1 border-t border-gray-200"></div>
-            <span class="px-4 text-sm text-gray-500">或</span>
-            <div class="flex-1 border-t border-gray-200"></div>
-          </div>
-
-          <!-- 注册链接 -->
-          <div class="mt-6 text-center">
-            <p class="text-sm text-gray-600">
-              还没有账户？
-              <button
-                @click="goToRegister"
-                class="font-medium text-gray-900 hover:underline"
-              >
-                立即注册
+              <button type="button" class="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+                忘记密码？
               </button>
-            </p>
+            </div>
+            <input
+              id="password"
+              v-model="form.password"
+              type="password"
+              required
+              placeholder="请输入密码"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm
+                     placeholder:text-gray-400 focus:outline-none focus:ring-2
+                     focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+            />
           </div>
-        </div>
+
+          <!-- 登录按钮 -->
+          <button
+            type="submit"
+            :disabled="loading"
+            class="w-full h-11 rounded-lg bg-gray-900 text-white text-sm font-medium
+                   hover:bg-gray-800 active:scale-[0.98] focus:outline-none focus:ring-2
+                   focus:ring-gray-900 focus:ring-offset-2 disabled:opacity-50
+                   disabled:cursor-not-allowed transition-all"
+          >
+            {{ loading ? '登录中...' : '登录' }}
+          </button>
+        </form>
+
+        <!-- 注册链接 -->
+        <p class="mt-8 text-center text-sm text-gray-500">
+          还没有账户？
+          <button
+            @click="goToRegister"
+            class="font-medium text-gray-900 hover:underline"
+          >
+            立即注册
+          </button>
+        </p>
       </div>
     </div>
   </div>
