@@ -1,0 +1,145 @@
+<script setup>
+/**
+ * 登录页面组件
+ */
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+/** 表单数据 */
+const form = ref({
+  username: '',
+  password: ''
+})
+
+/** 加载状态 */
+const loading = ref(false)
+
+/**
+ * 处理登录提交
+ */
+const handleSubmit = async () => {
+  loading.value = true
+  try {
+    // TODO: 调用登录接口
+    console.log('登录', form.value)
+    router.push('/')
+  } finally {
+    loading.value = false
+  }
+}
+
+/**
+ * 跳转到注册页面
+ */
+const goToRegister = () => {
+  router.push('/register')
+}
+</script>
+
+<template>
+  <div class="min-h-screen flex">
+    <!-- 左侧图片区域 -->
+    <div class="hidden lg:flex lg:w-1/2 relative">
+      <img
+        src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200"
+        alt="宠物"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <!-- 遮罩层 -->
+      <div class="absolute inset-0 bg-black/30"></div>
+      <!-- 文字内容 -->
+      <div class="relative z-10 flex flex-col justify-end p-12 text-white">
+        <h2 class="text-4xl font-bold mb-4">宠物管理系统</h2>
+        <p class="text-lg text-white/80">用心呵护每一个小生命</p>
+      </div>
+    </div>
+
+    <!-- 右侧登录区域 -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-4 py-12">
+      <div class="w-full max-w-md space-y-8">
+        <!-- 标题 -->
+        <div class="text-center">
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+            欢迎回来
+          </h1>
+          <p class="mt-2 text-sm text-gray-600">
+            登录您的账户
+          </p>
+        </div>
+
+        <!-- 登录表单卡片 -->
+        <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
+          <form @submit.prevent="handleSubmit" class="space-y-6">
+            <!-- 用户名 -->
+            <div class="space-y-2">
+              <label for="username" class="block text-sm font-medium text-gray-700">
+                用户名
+              </label>
+              <input
+                id="username"
+                v-model="form.username"
+                type="text"
+                required
+                placeholder="请输入用户名"
+                class="w-full h-10 px-3 rounded-md border border-gray-300 bg-white text-sm
+                       placeholder:text-gray-400 focus:outline-none focus:ring-2
+                       focus:ring-gray-900 focus:border-transparent transition-colors"
+              />
+            </div>
+
+            <!-- 密码 -->
+            <div class="space-y-2">
+              <label for="password" class="block text-sm font-medium text-gray-700">
+                密码
+              </label>
+              <input
+                id="password"
+                v-model="form.password"
+                type="password"
+                required
+                placeholder="请输入密码"
+                class="w-full h-10 px-3 rounded-md border border-gray-300 bg-white text-sm
+                       placeholder:text-gray-400 focus:outline-none focus:ring-2
+                       focus:ring-gray-900 focus:border-transparent transition-colors"
+              />
+            </div>
+
+            <!-- 登录按钮 -->
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full h-10 px-4 rounded-md bg-gray-900 text-white text-sm font-medium
+                     hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900
+                     focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed
+                     transition-colors"
+            >
+              {{ loading ? '登录中...' : '登录' }}
+            </button>
+          </form>
+
+          <!-- 分隔线 -->
+          <div class="mt-6 flex items-center">
+            <div class="flex-1 border-t border-gray-200"></div>
+            <span class="px-4 text-sm text-gray-500">或</span>
+            <div class="flex-1 border-t border-gray-200"></div>
+          </div>
+
+          <!-- 注册链接 -->
+          <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">
+              还没有账户？
+              <button
+                @click="goToRegister"
+                class="font-medium text-gray-900 hover:underline"
+              >
+                立即注册
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
