@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         // 使用MD5加密密码
         user.setPassword(DigestUtils.md5DigestAsHex(registerDTO.getPassword().getBytes()));
         user.setNickname(registerDTO.getUsername());
-        user.setRole(0);
+        user.setRole("user");
         user.setStatus(0);
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
@@ -103,6 +103,17 @@ public class UserServiceImpl implements UserService {
         // 检查账号状态
         if (user.getStatus() == 1) {
             throw new RuntimeException("账号已被封禁");
+        }
+
+        String loginRole = loginDTO.getLoginRole() == null ? "user" : loginDTO.getLoginRole();
+        if (!"user".equals(loginRole) && !"admin".equals(loginRole)) {
+            throw new RuntimeException("登录类型不合法");
+        }
+        if ("admin".equals(loginRole) && (user.getRole() == null || !"admin".equals(user.getRole()))) {
+            throw new RuntimeException("该账号不是管理员");
+        }
+        if ("user".equals(loginRole) && (user.getRole() != null && "admin".equals(user.getRole()))) {
+            throw new RuntimeException("该账号为管理员，请选择管理员登录");
         }
 
         return convertToVO(user);

@@ -11,7 +11,8 @@ const router = useRouter()
 /** 表单数据 */
 const form = ref({
   username: '',
-  password: ''
+  password: '',
+  loginRole: 'user'
 })
 
 /** 加载状态 */
@@ -31,7 +32,11 @@ const handleSubmit = async () => {
     if (res.code === 200) {
       // 保存用户信息到 localStorage
       localStorage.setItem('user', JSON.stringify(res.data))
-      router.push('/')
+      if (form.value.loginRole === 'admin') {
+        router.push('/admin/users')
+      } else {
+        router.push('/')
+      }
     } else {
       errorMsg.value = res.message || '登录失败'
     }
@@ -125,6 +130,20 @@ const goToRegister = () => {
                      placeholder:text-gray-400 focus:outline-none focus:ring-2
                      focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
             />
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="block text-sm font-medium text-gray-700">登录类型</div>
+            <div class="flex items-center gap-4 text-sm text-gray-700">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" value="user" v-model="form.loginRole" />
+                用户登录
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" value="admin" v-model="form.loginRole" />
+                管理员登录
+              </label>
+            </div>
           </div>
 
           <!-- 登录按钮 -->

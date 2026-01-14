@@ -34,7 +34,7 @@ public class UserVO {
     private String avatar;
 
     /**
-     * 用户角色：0-普通用户，1-管理员
+     * 用户角色：user/admin
      */
-    private Integer role;
+    private String role;
 }

@@ -17,4 +17,9 @@ public class LoginDTO {
      * 密码
      */
     private String password;
+
+    /**
+     * 登录类型：user-用户登录，admin-管理员登录
+     */
+    private String loginRole;
 }

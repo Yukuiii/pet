@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `password` VARCHAR(100) NOT NULL COMMENT '密码（MD5加密）',
     `nickname` VARCHAR(50) DEFAULT NULL COMMENT '昵称',
     `avatar` VARCHAR(255) DEFAULT NULL COMMENT '头像URL',
-    `role` TINYINT NOT NULL DEFAULT 0 COMMENT '用户角色：0-普通用户，1-管理员',
+    `role` VARCHAR(10) NOT NULL DEFAULT 'user' COMMENT '用户角色：user/admin',
     `status` TINYINT NOT NULL DEFAULT 0 COMMENT '账号状态：0-正常，1-封禁',
     `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS `user` (
     UNIQUE KEY `uk_username` (`username`),
     UNIQUE KEY `uk_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+
+INSERT IGNORE INTO `user` (`username`, `email`, `password`, `nickname`, `role`, `status`, `create_time`, `update_time`)
+VALUES ('admin', 'admin@pet.local', MD5('123456'), '管理员', 'admin', 0, NOW(), NOW());
 
 CREATE TABLE IF NOT EXISTS `pet` (
     `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '宠物ID',
@@ -110,6 +113,31 @@ CREATE TABLE IF NOT EXISTS `knowledge_article` (
     CONSTRAINT `fk_ka_category` FOREIGN KEY (`category_id`) REFERENCES `knowledge_category` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='养护知识文章表';
 
+CREATE TABLE IF NOT EXISTS `announcement` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '公告ID',
+    `title` VARCHAR(120) NOT NULL COMMENT '公告标题',
+    `content` TEXT NOT NULL COMMENT '公告内容',
+    `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态：0-有效，1-无效',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_announcement_status` (`status`),
+    KEY `idx_announcement_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='公告表';
+
+CREATE TABLE IF NOT EXISTS `site_config` (
+    `id` BIGINT NOT NULL COMMENT '配置ID（固定为1）',
+    `site_name` VARCHAR(60) NOT NULL COMMENT '站点名称',
+    `logo` VARCHAR(255) DEFAULT NULL COMMENT 'Logo URL',
+    `contact_email` VARCHAR(120) DEFAULT NULL COMMENT '联系邮箱',
+    `contact_phone` VARCHAR(50) DEFAULT NULL COMMENT '联系电话',
+    `icp` VARCHAR(60) DEFAULT NULL COMMENT '备案号',
+    `footer_text` VARCHAR(255) DEFAULT NULL COMMENT '页脚文案',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='网站基础配置表';
+
 INSERT IGNORE INTO `knowledge_category` (`id`, `name`, `sort`) VALUES
   (1, '喂养', 10),
   (2, '疾病', 20),
@@ -125,3 +153,9 @@ INSERT IGNORE INTO `knowledge_article` (`id`, `category_id`, `title`, `summary`,
    '1) 运动与嗅闻游戏：先消耗精力。\n2) 规则一致：全家口令一致。\n3) 正向强化：奖励正确行为，避免体罚。'),
   (4, 4, '疫苗与驱虫：时间表怎么安排', '给出常见疫苗与体内外驱虫的建议时间点。', NULL,
    '1) 疫苗：按兽医建议完成基础免疫。\n2) 体内外驱虫：根据体重、年龄与生活环境制定周期。\n3) 记录：建议建立健康记录，方便追踪。');
+
+INSERT IGNORE INTO `announcement` (`id`, `title`, `content`, `status`) VALUES
+  (1, '社区公告：文明养宠倡议', '请文明交流，禁止发布违法违规、辱骂攻击、涉黄涉赌等不当内容。管理员将对违规内容进行处理。', 0);
+
+INSERT IGNORE INTO `site_config` (`id`, `site_name`, `logo`, `contact_email`, `contact_phone`, `icp`, `footer_text`)
+VALUES (1, '宠物管理系统', NULL, 'admin@pet.local', NULL, NULL, 'Copyright © Pet');
