@@ -1,9 +1,17 @@
 package pet.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import lombok.RequiredArgsConstructor;
 import pet.common.Result;
 import pet.dto.LoginDTO;
 import pet.dto.RegisterDTO;
@@ -67,8 +75,7 @@ public class UserController {
     @PutMapping("/me")
     public Result<UserVO> updateProfile(
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
-            @RequestBody UpdateProfileDTO updateProfileDTO
-    ) {
+            @RequestBody UpdateProfileDTO updateProfileDTO) {
         try {
             UserVO userVO = userService.updateProfile(userId, updateProfileDTO);
             return Result.success(userVO);
@@ -80,8 +87,7 @@ public class UserController {
     @PostMapping(value = "/me/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<UserVO> uploadAvatar(
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
-            @RequestPart("file") MultipartFile file
-    ) {
+            @RequestPart("file") MultipartFile file) {
         try {
             UserVO userVO = userService.uploadAvatar(userId, file);
             return Result.success(userVO);
@@ -93,8 +99,7 @@ public class UserController {
     @PutMapping("/me/password")
     public Result<UserVO> updatePassword(
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
-            @RequestBody UpdatePasswordDTO updatePasswordDTO
-    ) {
+            @RequestBody UpdatePasswordDTO updatePasswordDTO) {
         try {
             UserVO userVO = userService.updatePassword(userId, updatePasswordDTO);
             return Result.success(userVO);

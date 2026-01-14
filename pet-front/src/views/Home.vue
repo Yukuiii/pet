@@ -17,6 +17,8 @@ const user = computed(() => {
 const toLogin = () => router.push('/login')
 const toRegister = () => router.push('/register')
 const toProfile = () => router.push('/profile')
+const toPets = () => router.push('/pets')
+const toCommunity = () => router.push('/community')
 const logout = () => {
   localStorage.removeItem('user')
   userStr.value = ''
@@ -40,6 +42,18 @@ const logout = () => {
                 @click="toProfile"
               >
                 个人中心
+              </button>
+              <button
+                class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                @click="toPets"
+              >
+                宠物档案
+              </button>
+              <button
+                class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                @click="toCommunity"
+              >
+                社区动态
               </button>
               <button
                 class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"

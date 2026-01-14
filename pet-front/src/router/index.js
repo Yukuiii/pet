@@ -3,6 +3,9 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
+import Pets from '../views/Pets.vue'
+import PetDetail from '../views/PetDetail.vue'
+import Community from '../views/Community.vue'
 
 /**
  * 路由配置
@@ -27,6 +30,21 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/pets',
+    name: 'Pets',
+    component: Pets
+  },
+  {
+    path: '/pets/:id',
+    name: 'PetDetail',
+    component: PetDetail
+  },
+  {
+    path: '/community',
+    name: 'Community',
+    component: Community
   }
 ]
 
