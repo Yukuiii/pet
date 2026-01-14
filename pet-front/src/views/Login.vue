@@ -4,6 +4,7 @@
  */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { login } from '@/api/user'
 
 const router = useRouter()
 
@@ -16,15 +17,26 @@ const form = ref({
 /** 加载状态 */
 const loading = ref(false)
 
+/** 错误信息 */
+const errorMsg = ref('')
+
 /**
  * 处理登录提交
  */
 const handleSubmit = async () => {
+  errorMsg.value = ''
   loading.value = true
   try {
-    // TODO: 调用登录接口
-    console.log('登录', form.value)
-    router.push('/')
+    const res = await login(form.value)
+    if (res.code === 200) {
+      // 保存用户信息到 localStorage
+      localStorage.setItem('user', JSON.stringify(res.data))
+      router.push('/')
+    } else {
+      errorMsg.value = res.message || '登录失败'
+    }
+  } catch (error) {
+    errorMsg.value = '网络错误，请稍后重试'
   } finally {
     loading.value = false
   }
@@ -71,6 +83,11 @@ const goToRegister = () => {
 
         <!-- 登录表单 -->
         <form @submit.prevent="handleSubmit" class="space-y-5">
+          <!-- 错误提示 -->
+          <div v-if="errorMsg" class="p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+            {{ errorMsg }}
+          </div>
+
           <!-- 用户名 -->
           <div class="space-y-1.5">
             <label for="username" class="block text-sm font-medium text-gray-700">

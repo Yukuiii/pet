@@ -4,6 +4,7 @@
  */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { register } from '@/api/user'
 
 const router = useRouter()
 
@@ -18,21 +19,35 @@ const form = ref({
 /** 加载状态 */
 const loading = ref(false)
 
+/** 错误信息 */
+const errorMsg = ref('')
+
 /**
  * 处理注册提交
  */
 const handleSubmit = async () => {
+  errorMsg.value = ''
+
   // 验证密码一致性
   if (form.value.password !== form.value.confirmPassword) {
-    alert('两次输入的密码不一致')
+    errorMsg.value = '两次输入的密码不一致'
     return
   }
 
   loading.value = true
   try {
-    // TODO: 调用注册接口
-    console.log('注册', form.value)
-    router.push('/login')
+    const res = await register({
+      username: form.value.username,
+      email: form.value.email,
+      password: form.value.password
+    })
+    if (res.code === 200) {
+      router.push('/login')
+    } else {
+      errorMsg.value = res.message || '注册失败'
+    }
+  } catch (error) {
+    errorMsg.value = '网络错误，请稍后重试'
   } finally {
     loading.value = false
   }
@@ -79,6 +94,11 @@ const goToLogin = () => {
 
         <!-- 注册表单 -->
         <form @submit.prevent="handleSubmit" class="space-y-4">
+          <!-- 错误提示 -->
+          <div v-if="errorMsg" class="p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+            {{ errorMsg }}
+          </div>
+
           <!-- 用户名 -->
           <div class="space-y-1.5">
             <label for="username" class="block text-sm font-medium text-gray-700">
