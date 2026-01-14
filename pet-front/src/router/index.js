@@ -8,6 +8,7 @@ import PetDetail from '../views/PetDetail.vue'
 import Community from '../views/Community.vue'
 import Knowledge from '../views/Knowledge.vue'
 import KnowledgeDetail from '../views/KnowledgeDetail.vue'
+import Announcements from '../views/Announcements.vue'
 import AdminLayout from '../views/admin/AdminLayout.vue'
 import AdminUsers from '../views/admin/AdminUsers.vue'
 import AdminPosts from '../views/admin/AdminPosts.vue'
@@ -65,6 +66,11 @@ const routes = [
     path: '/knowledge/:id',
     name: 'KnowledgeDetail',
     component: KnowledgeDetail
+  },
+  {
+    path: '/announcements',
+    name: 'Announcements',
+    component: Announcements
   },
   {
     path: '/admin',

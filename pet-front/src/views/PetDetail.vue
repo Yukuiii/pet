@@ -6,6 +6,7 @@ import {
   deleteHealthRecord,
   listHealthRecords,
   listMyPets,
+  updateHealthRecord,
   updatePet,
   uploadPetPhoto
 } from '@/api/pet'
@@ -32,6 +33,7 @@ const form = ref({
 
 const recordsLoading = ref(false)
 const records = ref([])
+const editingRecordId = ref(null)
 const recordForm = ref({
   recordTime: '',
   title: '',
@@ -175,17 +177,36 @@ const handleAddRecord = async () => {
       title,
       content: recordForm.value.content || null
     }
-    const res = await createHealthRecord(petId.value, payload)
+    const res = editingRecordId.value
+      ? await updateHealthRecord(petId.value, editingRecordId.value, payload)
+      : await createHealthRecord(petId.value, payload)
     if (res.code === 200) {
-      successMsg.value = '已添加健康记录'
+      successMsg.value = editingRecordId.value ? '已更新健康记录' : '已添加健康记录'
+      editingRecordId.value = null
       recordForm.value = { recordTime: '', title: '', content: '' }
       await loadRecords()
     } else {
-      errorMsg.value = res.message || '添加失败'
+      errorMsg.value = res.message || (editingRecordId.value ? '更新失败' : '添加失败')
     }
   } catch (e) {
     errorMsg.value = '网络错误，请稍后重试'
   }
+}
+
+const handleEditRecord = (r) => {
+  successMsg.value = ''
+  errorMsg.value = ''
+  editingRecordId.value = r.id
+  recordForm.value = {
+    recordTime: r.recordTime || '',
+    title: r.title || '',
+    content: r.content || ''
+  }
+}
+
+const cancelEditRecord = () => {
+  editingRecordId.value = null
+  recordForm.value = { recordTime: '', title: '', content: '' }
 }
 
 const handleDeleteRecord = async (recordId) => {
@@ -196,6 +217,10 @@ const handleDeleteRecord = async (recordId) => {
     const res = await deleteHealthRecord(petId.value, recordId)
     if (res.code === 200) {
       successMsg.value = '已删除'
+      if (editingRecordId.value === recordId) {
+        editingRecordId.value = null
+        recordForm.value = { recordTime: '', title: '', content: '' }
+      }
       await loadRecords()
     } else {
       errorMsg.value = res.message || '删除失败'
@@ -347,12 +372,19 @@ onMounted(async () => {
               ></textarea>
             </div>
           </div>
-          <div class="mt-4 flex items-center justify-end">
+          <div class="mt-4 flex items-center justify-end gap-2">
+            <button
+              v-if="editingRecordId"
+              class="h-11 px-5 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              @click="cancelEditRecord"
+            >
+              取消编辑
+            </button>
             <button
               class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
               @click="handleAddRecord"
             >
-              添加记录
+              {{ editingRecordId ? '保存修改' : '添加记录' }}
             </button>
           </div>
         </div>
@@ -373,12 +405,20 @@ onMounted(async () => {
                 <div class="text-xs text-gray-500 mt-1">{{ r.recordTime }}</div>
                 <div v-if="r.content" class="text-sm text-gray-700 mt-3 whitespace-pre-wrap">{{ r.content }}</div>
               </div>
-              <button
-                class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                @click="handleDeleteRecord(r.id)"
-              >
-                删除
-              </button>
+              <div class="flex items-center gap-2">
+                <button
+                  class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  @click="handleEditRecord(r)"
+                >
+                  编辑
+                </button>
+                <button
+                  class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  @click="handleDeleteRecord(r.id)"
+                >
+                  删除
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -386,4 +426,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
