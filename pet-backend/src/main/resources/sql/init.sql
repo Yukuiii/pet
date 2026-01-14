@@ -83,3 +83,45 @@ CREATE TABLE IF NOT EXISTS `community_comment` (
     CONSTRAINT `fk_cc_post` FOREIGN KEY (`post_id`) REFERENCES `community_post` (`id`) ON DELETE CASCADE,
     CONSTRAINT `fk_cc_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='社区评论表';
+
+CREATE TABLE IF NOT EXISTS `knowledge_category` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+    `name` VARCHAR(50) NOT NULL COMMENT '分类名称',
+    `sort` INT NOT NULL DEFAULT 0 COMMENT '排序',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_kc_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='养护知识分类表';
+
+CREATE TABLE IF NOT EXISTS `knowledge_article` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+    `category_id` BIGINT NOT NULL COMMENT '分类ID',
+    `title` VARCHAR(120) NOT NULL COMMENT '标题',
+    `summary` VARCHAR(255) DEFAULT NULL COMMENT '摘要',
+    `cover` VARCHAR(255) DEFAULT NULL COMMENT '封面URL',
+    `content` MEDIUMTEXT NOT NULL COMMENT '正文',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_ka_category_id` (`category_id`),
+    KEY `idx_ka_create_time` (`create_time`),
+    FULLTEXT KEY `ft_ka_title_content` (`title`, `content`),
+    CONSTRAINT `fk_ka_category` FOREIGN KEY (`category_id`) REFERENCES `knowledge_category` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='养护知识文章表';
+
+INSERT IGNORE INTO `knowledge_category` (`id`, `name`, `sort`) VALUES
+  (1, '喂养', 10),
+  (2, '疾病', 20),
+  (3, '行为', 30),
+  (4, '日常护理', 40);
+
+INSERT IGNORE INTO `knowledge_article` (`id`, `category_id`, `title`, `summary`, `cover`, `content`) VALUES
+  (1, 1, '幼犬喂养入门：从频次到食量', '介绍幼犬阶段的喂养频次、主食选择与常见误区。', NULL,
+   '1) 喂养频次：幼犬建议少量多餐。\n2) 主食选择：优先选择适龄犬粮。\n3) 饮水：随时提供清洁饮水。\n4) 禁忌：避免高盐高油、巧克力、葡萄等。'),
+  (2, 2, '常见皮肤问题：瘙痒与掉毛怎么办', '从环境、寄生虫与饮食三个角度排查皮肤问题。', NULL,
+   '1) 先排查跳蚤/螨虫等寄生虫。\n2) 观察是否更换洗护/环境潮湿。\n3) 饮食过敏可考虑单一蛋白试喂。\n4) 严重或持续建议及时就医。'),
+  (3, 3, '拆家与乱叫：行为纠正的三步法', '通过消耗精力、建立规则和正向强化改善行为。', NULL,
+   '1) 运动与嗅闻游戏：先消耗精力。\n2) 规则一致：全家口令一致。\n3) 正向强化：奖励正确行为，避免体罚。'),
+  (4, 4, '疫苗与驱虫：时间表怎么安排', '给出常见疫苗与体内外驱虫的建议时间点。', NULL,
+   '1) 疫苗：按兽医建议完成基础免疫。\n2) 体内外驱虫：根据体重、年龄与生活环境制定周期。\n3) 记录：建议建立健康记录，方便追踪。');
