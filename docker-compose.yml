@@ -9,7 +9,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-mysql-dev-123456.}
       APP_UPLOAD_DIR: ${APP_UPLOAD_DIR:-/data/uploads}
     ports:
-      - "8080:8080"
+      - "8910:8080"
     volumes:
       - pet_uploads:/data/uploads
 

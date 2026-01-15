@@ -9,8 +9,8 @@ docker-compose up -d --build backend
 
 echo "等待后端启动..."
 for i in {1..60}; do
-  if curl -fsS "http://localhost:8080/api/announcements/latest" >/dev/null 2>&1; then
-    echo "后端已就绪: http://localhost:8080"
+  if curl -fsS "http://localhost:8910/api/announcements/latest" >/dev/null 2>&1; then
+    echo "后端已就绪: http://localhost:8910"
     break
   fi
   sleep 1
