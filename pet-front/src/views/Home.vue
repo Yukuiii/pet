@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { latestAnnouncement } from '@/api/announcement'
 import { getSiteConfig } from '@/api/siteConfig'
 import { listPosts } from '@/api/community'
+import { getMediaUrl } from '@/utils/url'
 
 const router = useRouter()
 
@@ -68,12 +69,6 @@ const loadPosts = async () => {
 }
 
 onMounted(loadPosts)
-
-const postMediaUrl = (url) => {
-  if (!url) return ''
-  if (url.startsWith('http://') || url.startsWith('https://')) return url
-  return `http://localhost:8080${url}`
-}
 
 const goCommunity = () => router.push('/community')
 const goAnnouncements = () => router.push('/announcements')
@@ -151,6 +146,50 @@ const goAnnouncements = () => router.push('/announcements')
           </div>
         </div>
 
+        <!-- 用户个人信息卡片 -->
+        <div v-if="user" class="mt-6 rounded-xl border border-gray-200 bg-white p-5">
+          <div class="flex items-center gap-4">
+            <!-- 用户头像 -->
+            <div class="flex-shrink-0">
+              <img
+                v-if="user.avatar"
+                :src="getMediaUrl(user.avatar)"
+                alt="头像"
+                class="w-16 h-16 rounded-full object-cover border border-gray-200"
+              />
+              <div
+                v-else
+                class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-medium"
+              >
+                {{ (user.nickname || user.username || '').charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <!-- 用户信息 -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-lg font-semibold text-gray-900">{{ user.nickname || user.username }}</span>
+                <span
+                  v-if="user.role === 'admin'"
+                  class="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700"
+                >
+                  管理员
+                </span>
+              </div>
+              <div class="mt-1 text-sm text-gray-500">@{{ user.username }}</div>
+              <div v-if="user.email" class="mt-1 text-sm text-gray-500">{{ user.email }}</div>
+            </div>
+            <!-- 操作按钮 -->
+            <div class="flex-shrink-0">
+              <button
+                class="h-9 px-4 rounded-lg bg-gray-100 text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+                @click="toProfile"
+              >
+                编辑资料
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
           <div v-if="siteConfig" class="mb-3 text-xs text-gray-500">
             <div v-if="siteConfig.contactEmail">联系邮箱：{{ siteConfig.contactEmail }}</div>
@@ -170,10 +209,7 @@ const goAnnouncements = () => router.push('/announcements')
             </div>
             <div class="mt-1 text-sm text-gray-700 whitespace-pre-wrap">{{ latest.content }}</div>
           </div>
-          <div v-if="user">
-            你好，{{ user.nickname || user.username }}。你可以在“个人中心”修改昵称、头像和密码。
-          </div>
-          <div v-else>
+          <div v-if="!user">
             先登录后即可使用个人信息管理功能。
           </div>
         </div>
@@ -216,7 +252,7 @@ const goAnnouncements = () => router.push('/announcements')
               <img
                 v-for="(img, idx) in p.images.slice(0, 3)"
                 :key="idx"
-                :src="postMediaUrl(img)"
+                :src="getMediaUrl(img)"
                 alt="img"
                 class="w-full aspect-square object-cover rounded-lg border border-gray-200"
               />

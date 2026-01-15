@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getMe, updatePassword, updateProfile, uploadAvatar } from '@/api/user'
+import { getMediaUrl } from '@/utils/url'
 
 const router = useRouter()
 
@@ -24,10 +25,7 @@ const pwdForm = ref({
 })
 
 const avatarUrl = computed(() => {
-  const avatar = user.value?.avatar
-  if (!avatar) return ''
-  if (avatar.startsWith('http://') || avatar.startsWith('https://')) return avatar
-  return `http://localhost:8080${avatar}`
+  return getMediaUrl(user.value?.avatar)
 })
 
 const loadMe = async () => {

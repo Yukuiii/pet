@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { createComment, createPost, deleteComment, deletePost, listComments, listPosts } from '@/api/community'
+import { getMediaUrl } from '@/utils/url'
 
 const router = useRouter()
 
@@ -37,12 +38,6 @@ const ensureLogin = () => {
     return false
   }
   return true
-}
-
-const mediaUrl = (url) => {
-  if (!url) return ''
-  if (url.startsWith('http://') || url.startsWith('https://')) return url
-  return `http://localhost:8080${url}`
 }
 
 const loadPosts = async () => {
@@ -268,7 +263,7 @@ onMounted(async () => {
           <div class="flex items-start justify-between gap-4">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 overflow-hidden flex items-center justify-center">
-                <img v-if="p.author?.avatar" :src="mediaUrl(p.author.avatar)" alt="avatar" class="w-full h-full object-cover" />
+                <img v-if="p.author?.avatar" :src="getMediaUrl(p.author.avatar)" alt="avatar" class="w-full h-full object-cover" />
                 <div v-else class="text-xs text-gray-400">头像</div>
               </div>
               <div class="min-w-0">
@@ -298,7 +293,7 @@ onMounted(async () => {
             <img
               v-for="(img, idx) in p.images"
               :key="idx"
-              :src="mediaUrl(img)"
+              :src="getMediaUrl(img)"
               alt="img"
               class="w-full aspect-square object-cover rounded-lg border border-gray-200"
             />

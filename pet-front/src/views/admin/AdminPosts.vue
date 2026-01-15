@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { deletePost, pagePosts } from '@/api/adminModeration'
+import { getMediaUrl } from '@/utils/url'
 
 const loading = ref(false)
 const errorMsg = ref('')
@@ -15,12 +16,6 @@ const total = ref(0)
 const list = ref([])
 
 const totalPages = computed(() => Math.max(1, Math.ceil((total.value || 0) / size.value)))
-
-const mediaUrl = (url) => {
-  if (!url) return ''
-  if (url.startsWith('http://') || url.startsWith('https://')) return url
-  return `http://localhost:8080${url}`
-}
 
 const load = async () => {
   loading.value = true
@@ -148,7 +143,7 @@ const handleDelete = async (p) => {
           <img
             v-for="(img, idx) in p.images"
             :key="idx"
-            :src="mediaUrl(img)"
+            :src="getMediaUrl(img)"
             alt="img"
             class="w-full aspect-square object-cover rounded-lg border border-gray-200"
           />

@@ -10,6 +10,7 @@ import {
   updatePet,
   uploadPetPhoto
 } from '@/api/pet'
+import { getMediaUrl } from '@/utils/url'
 
 const route = useRoute()
 const router = useRouter()
@@ -50,10 +51,7 @@ const ensureLogin = () => {
 }
 
 const photoUrl = computed(() => {
-  const photo = pet.value?.photo
-  if (!photo) return ''
-  if (photo.startsWith('http://') || photo.startsWith('https://')) return photo
-  return `http://localhost:8080${photo}`
+  return getMediaUrl(pet.value?.photo)
 })
 
 const genderLabel = (gender) => {
