@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService {
             Path target = avatarDir.resolve(filename).normalize();
             Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("头像上传失败");
+            throw new RuntimeException("头像上传失败: " + e.getMessage() + ", 目录: " + avatarDir.toAbsolutePath());
         }
 
         user.setAvatar("/uploads/avatars/" + filename);
