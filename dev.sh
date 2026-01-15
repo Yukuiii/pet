@@ -2,6 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONTAINER_NAME="pet-backend"
+IMAGE_NAME="pet-backend"
 
 cd "$ROOT_DIR"
 
@@ -10,8 +12,26 @@ echo "构建后端..."
 cd "$ROOT_DIR/pet-backend"
 mvn -DskipTests package
 
+# 构建 Docker 镜像
+echo "构建 Docker 镜像..."
+docker build -t "$IMAGE_NAME" .
+
+# 停止并删除旧容器
+docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+
+# 启动新容器
+echo "启动后端容器..."
+docker run -d \
+  --name "$CONTAINER_NAME" \
+  -p 8910:8080 \
+  -e SPRING_DATASOURCE_URL="jdbc:mysql://129.204.27.16:12306/pet?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai" \
+  -e SPRING_DATASOURCE_USERNAME="root" \
+  -e SPRING_DATASOURCE_PASSWORD="mysql-dev-123456." \
+  -e APP_UPLOAD_DIR="/data/uploads" \
+  -v pet_uploads:/data/uploads \
+  "$IMAGE_NAME"
+
 cd "$ROOT_DIR"
-docker-compose up -d --build backend
 
 echo "等待后端启动..."
 for i in {1..60}; do
