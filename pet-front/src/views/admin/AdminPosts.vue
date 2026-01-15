@@ -63,6 +63,8 @@ const handleDelete = async (p) => {
     errorMsg.value = '网络错误，请稍后重试'
   }
 }
+
+onMounted(load)
 </script>
 
 <template>
