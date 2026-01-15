@@ -4,7 +4,7 @@ import axios from 'axios'
  * 创建 axios 实例
  */
 const request = axios.create({
-  baseURL: 'http://localhost:8910/api',
+  baseURL: 'http://129.204.27.16:8910/api',
   timeout: 10000
 })
 
