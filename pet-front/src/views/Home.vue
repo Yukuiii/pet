@@ -112,9 +112,17 @@ const formatTime = (timeStr) => {
     <div class="max-w-5xl mx-auto px-6 py-10">
       <div class="bg-white border border-gray-200 rounded-xl p-6">
         <div class="flex items-start justify-between gap-4">
-          <div>
-            <h1 class="text-2xl font-semibold text-gray-900">{{ siteConfig?.siteName || '宠物管理系统' }}</h1>
-            <p class="text-sm text-gray-500 mt-1">欢迎使用</p>
+          <div class="flex items-center gap-4">
+            <img
+              v-if="siteConfig?.logo"
+              :src="getMediaUrl(siteConfig.logo)"
+              alt="Logo"
+              class="w-12 h-12 rounded-lg object-cover"
+            />
+            <div>
+              <h1 class="text-2xl font-semibold text-gray-900">{{ siteConfig?.siteName || '宠物管理系统' }}</h1>
+              <p class="text-sm text-gray-500 mt-1">欢迎使用</p>
+            </div>
           </div>
           <div class="flex items-center gap-3">
             <template v-if="user">
