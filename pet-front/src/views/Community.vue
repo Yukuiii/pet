@@ -66,7 +66,8 @@ const loadPosts = async () => {
 
 const handleFiles = (event) => {
   const files = Array.from(event.target.files || [])
-  selectedFiles.value = files
+  selectedFiles.value = [...selectedFiles.value, ...files]
+  event.target.value = ''
 }
 
 /**
