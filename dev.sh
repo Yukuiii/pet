@@ -5,6 +5,12 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$ROOT_DIR"
 
+# 外部构建后端
+echo "构建后端..."
+cd "$ROOT_DIR/pet-backend"
+mvn -DskipTests package
+
+cd "$ROOT_DIR"
 docker-compose up -d --build backend
 
 echo "等待后端启动..."
