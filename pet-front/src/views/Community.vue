@@ -192,6 +192,39 @@ onMounted(async () => {
   if (!ensureLogin()) return
   await loadPosts()
 })
+
+/**
+ * 格式化时间显示
+ * @param {string} timeStr - 时间字符串
+ * @returns {string} 格式化后的时间
+ */
+const formatTime = (timeStr) => {
+  if (!timeStr) return ''
+  const date = new Date(timeStr)
+  if (isNaN(date.getTime())) return timeStr
+
+  const now = new Date()
+  const diff = now - date
+  const minutes = Math.floor(diff / 60000)
+  const hours = Math.floor(diff / 3600000)
+  const days = Math.floor(diff / 86400000)
+
+  if (minutes < 1) return '刚刚'
+  if (minutes < 60) return `${minutes}分钟前`
+  if (hours < 24) return `${hours}小时前`
+  if (days < 7) return `${days}天前`
+
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hour = String(date.getHours()).padStart(2, '0')
+  const minute = String(date.getMinutes()).padStart(2, '0')
+
+  if (year === now.getFullYear()) {
+    return `${month}-${day} ${hour}:${minute}`
+  }
+  return `${year}-${month}-${day} ${hour}:${minute}`
+}
 </script>
 
 <template>
@@ -309,7 +342,7 @@ onMounted(async () => {
                   {{ p.author?.nickname || '用户' }}
                 </div>
                 <div class="text-xs text-gray-500">
-                  {{ p.createTime }}
+                  {{ formatTime(p.createTime) }}
                 </div>
               </div>
             </div>
@@ -371,16 +404,22 @@ onMounted(async () => {
                 class="p-4 rounded-lg border border-gray-200"
               >
                 <div class="flex items-start justify-between gap-4">
-                  <div class="min-w-0">
-                    <div class="text-sm font-medium text-gray-900">
-                      {{ c.author?.nickname || '用户' }}
-                      <span class="ml-2 text-xs text-gray-500">{{ c.createTime }}</span>
+                  <div class="flex items-start gap-3 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 overflow-hidden flex items-center justify-center flex-shrink-0">
+                      <img v-if="c.author?.avatar" :src="getMediaUrl(c.author.avatar)" alt="avatar" class="w-full h-full object-cover" />
+                      <div v-else class="text-xs text-gray-400">{{ (c.author?.nickname || '用户').charAt(0) }}</div>
                     </div>
-                    <div class="text-sm text-gray-800 mt-2 whitespace-pre-wrap">{{ c.content }}</div>
+                    <div class="min-w-0">
+                      <div class="text-sm font-medium text-gray-900">
+                        {{ c.author?.nickname || '用户' }}
+                        <span class="ml-2 text-xs text-gray-500">{{ formatTime(c.createTime) }}</span>
+                      </div>
+                      <div class="text-sm text-gray-800 mt-1 whitespace-pre-wrap">{{ c.content }}</div>
+                    </div>
                   </div>
                   <button
                     v-if="me && c.author?.id === me.id"
-                    class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0"
                     @click="handleDeleteComment(p.id, c.id)"
                   >
                     删除
