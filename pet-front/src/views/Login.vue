@@ -112,14 +112,9 @@ const goToRegister = () => {
 
           <!-- 密码 -->
           <div class="space-y-1.5">
-            <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium text-gray-700">
-                密码
-              </label>
-              <button type="button" class="text-xs text-gray-500 hover:text-gray-900 transition-colors">
-                忘记密码？
-              </button>
-            </div>
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              密码
+            </label>
             <input
               id="password"
               v-model="form.password"
