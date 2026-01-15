@@ -25,7 +25,8 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
@@ -40,41 +41,49 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    meta: { requiresAuth: true }
   },
   {
     path: '/pets',
     name: 'Pets',
-    component: Pets
+    component: Pets,
+    meta: { requiresAuth: true }
   },
   {
     path: '/pets/:id',
     name: 'PetDetail',
-    component: PetDetail
+    component: PetDetail,
+    meta: { requiresAuth: true }
   },
   {
     path: '/community',
     name: 'Community',
-    component: Community
+    component: Community,
+    meta: { requiresAuth: true }
   },
   {
     path: '/knowledge',
     name: 'Knowledge',
-    component: Knowledge
+    component: Knowledge,
+    meta: { requiresAuth: true }
   },
   {
     path: '/knowledge/:id',
     name: 'KnowledgeDetail',
-    component: KnowledgeDetail
+    component: KnowledgeDetail,
+    meta: { requiresAuth: true }
   },
   {
     path: '/announcements',
     name: 'Announcements',
-    component: Announcements
+    component: Announcements,
+    meta: { requiresAuth: true }
   },
   {
     path: '/admin',
     component: AdminLayout,
+    meta: { requiresAuth: true, requiresAdmin: true },
     children: [
       {
         path: 'users',
@@ -124,17 +133,28 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  if (!to.path.startsWith('/admin')) return true
   const userStr = localStorage.getItem('user')
-  if (!userStr) return '/login'
-  try {
-    const user = JSON.parse(userStr)
-    if (user?.role !== 'admin') return '/'
-    return true
-  } catch (e) {
-    localStorage.removeItem('user')
+  let user = null
+
+  if (userStr) {
+    try {
+      user = JSON.parse(userStr)
+    } catch (e) {
+      localStorage.removeItem('user')
+    }
+  }
+
+  // 需要登录的页面
+  if (to.meta.requiresAuth && !user) {
     return '/login'
   }
+
+  // 需要管理员权限的页面
+  if (to.meta.requiresAdmin && user?.role !== 'admin') {
+    return '/'
+  }
+
+  return true
 })
 
 export default router
