@@ -1,7 +1,8 @@
-target
 .idea
 .vscode
 *.iml
 *.log
 **/.DS_Store
+src
+pom.xml
 
