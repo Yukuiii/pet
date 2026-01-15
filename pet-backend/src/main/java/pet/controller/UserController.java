@@ -38,12 +38,8 @@ public class UserController {
      */
     @PostMapping("/register")
     public Result<UserVO> register(@RequestBody RegisterDTO registerDTO) {
-        try {
-            UserVO userVO = userService.register(registerDTO);
-            return Result.success(userVO);
-        } catch (RuntimeException e) {
-            return Result.error(e.getMessage());
-        }
+        UserVO userVO = userService.register(registerDTO);
+        return Result.success(userVO);
     }
 
     /**
@@ -54,57 +50,64 @@ public class UserController {
      */
     @PostMapping("/login")
     public Result<UserVO> login(@RequestBody LoginDTO loginDTO) {
-        try {
-            UserVO userVO = userService.login(loginDTO);
-            return Result.success(userVO);
-        } catch (RuntimeException e) {
-            return Result.error(e.getMessage());
-        }
+        UserVO userVO = userService.login(loginDTO);
+        return Result.success(userVO);
     }
 
+    /**
+     * 获取当前用户信息
+     *
+     * @param userId 用户ID
+     * @return 用户信息
+     */
     @GetMapping("/me")
     public Result<UserVO> me(@RequestHeader(value = "X-User-Id", required = false) Long userId) {
-        try {
-            UserVO userVO = userService.getCurrentUser(userId);
-            return Result.success(userVO);
-        } catch (RuntimeException e) {
-            return Result.error(e.getMessage());
-        }
+        UserVO userVO = userService.getCurrentUser(userId);
+        return Result.success(userVO);
     }
 
+    /**
+     * 更新用户资料
+     *
+     * @param userId 用户ID
+     * @param updateProfileDTO 更新信息
+     * @return 更新后的用户信息
+     */
     @PutMapping("/me")
     public Result<UserVO> updateProfile(
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
             @RequestBody UpdateProfileDTO updateProfileDTO) {
-        try {
-            UserVO userVO = userService.updateProfile(userId, updateProfileDTO);
-            return Result.success(userVO);
-        } catch (RuntimeException e) {
-            return Result.error(e.getMessage());
-        }
+        UserVO userVO = userService.updateProfile(userId, updateProfileDTO);
+        return Result.success(userVO);
     }
 
+    /**
+     * 上传头像
+     *
+     * @param userId 用户ID
+     * @param file 头像文件
+     * @return 更新后的用户信息
+     */
     @PostMapping(value = "/me/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<UserVO> uploadAvatar(
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
             @RequestPart("file") MultipartFile file) {
-        try {
-            UserVO userVO = userService.uploadAvatar(userId, file);
-            return Result.success(userVO);
-        } catch (RuntimeException e) {
-            return Result.error(e.getMessage());
-        }
+        UserVO userVO = userService.uploadAvatar(userId, file);
+        return Result.success(userVO);
     }
 
+    /**
+     * 修改密码
+     *
+     * @param userId 用户ID
+     * @param updatePasswordDTO 密码信息
+     * @return 更新后的用户信息
+     */
     @PutMapping("/me/password")
     public Result<UserVO> updatePassword(
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
             @RequestBody UpdatePasswordDTO updatePasswordDTO) {
-        try {
-            UserVO userVO = userService.updatePassword(userId, updatePasswordDTO);
-            return Result.success(userVO);
-        } catch (RuntimeException e) {
-            return Result.error(e.getMessage());
-        }
+        UserVO userVO = userService.updatePassword(userId, updatePasswordDTO);
+        return Result.success(userVO);
     }
 }
