@@ -99,8 +99,8 @@ const save = async () => {
       footerText: form.value.footerText
     })
     if (res.code === 200) {
-      successMsg.value = '已保存'
       await load()
+      successMsg.value = '保存成功'
     } else {
       errorMsg.value = res.message || '保存失败'
     }
