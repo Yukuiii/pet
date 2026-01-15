@@ -81,7 +81,7 @@ const goToLogin = () => {
 
     <!-- 右侧注册区域 -->
     <div class="w-full lg:w-1/2 flex items-center justify-center bg-white px-6 py-12">
-      <div class="w-full max-w-sm">
+      <div class="w-full max-w-md">
         <!-- 标题 -->
         <div class="mb-8">
           <h1 class="text-2xl font-semibold text-gray-900">

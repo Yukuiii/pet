@@ -33,7 +33,7 @@ onMounted(load)
 
 <template>
   <div class="min-h-screen bg-gray-50">
-    <div class="max-w-4xl mx-auto px-6 py-10">
+    <div class="max-w-5xl mx-auto px-6 py-10">
       <div class="flex items-center justify-between mb-8">
         <div>
           <h1 class="text-2xl font-semibold text-gray-900">文章详情</h1>

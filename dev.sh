@@ -29,7 +29,7 @@ docker run -d \
   -e SPRING_DATASOURCE_USERNAME="root" \
   -e SPRING_DATASOURCE_PASSWORD="dev-mysql-123456." \
   -e APP_UPLOAD_DIR="/data/uploads" \
-  -v pet_uploads:/data/uploads \
+  -v /home/etc_service/pet/pet-upload:/data/uploads \
   "$IMAGE_NAME"
 
 cd "$ROOT_DIR"
