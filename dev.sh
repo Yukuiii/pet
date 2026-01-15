@@ -23,8 +23,9 @@ docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
 echo "启动后端容器..."
 docker run -d \
   --name "$CONTAINER_NAME" \
+  --network compose_default \
   -p 8910:8080 \
-  -e SPRING_DATASOURCE_URL="jdbc:mysql://129.204.27.16:12306/pet?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai" \
+  -e SPRING_DATASOURCE_URL="jdbc:mysql://mysql:3306/pet?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai" \
   -e SPRING_DATASOURCE_USERNAME="root" \
   -e SPRING_DATASOURCE_PASSWORD="mysql-dev-123456." \
   -e APP_UPLOAD_DIR="/data/uploads" \
