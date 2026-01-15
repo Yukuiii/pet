@@ -27,7 +27,7 @@ docker run -d \
   -p 8910:8080 \
   -e SPRING_DATASOURCE_URL="jdbc:mysql://129.204.27.16:12306/pet?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai" \
   -e SPRING_DATASOURCE_USERNAME="root" \
-  -e SPRING_DATASOURCE_PASSWORD="mysql-dev-123456." \
+  -e SPRING_DATASOURCE_PASSWORD="dev-mysql-123456." \
   -e APP_UPLOAD_DIR="/data/uploads" \
   -v pet_uploads:/data/uploads \
   "$IMAGE_NAME"

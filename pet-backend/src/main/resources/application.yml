@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://129.204.27.16:12306/pet?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: mysql-dev-123456.
+    password: dev-mysql-123456.
 
 # 服务端口
 server:
