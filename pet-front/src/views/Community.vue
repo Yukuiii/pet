@@ -22,6 +22,13 @@ const form = ref({
 })
 const selectedFiles = ref([])
 
+/**
+ * 已选图片的预览URL列表
+ */
+const previewUrls = computed(() => {
+  return selectedFiles.value.map(file => URL.createObjectURL(file))
+})
+
 const me = computed(() => {
   const userStr = localStorage.getItem('user')
   if (!userStr) return null
@@ -60,6 +67,14 @@ const loadPosts = async () => {
 const handleFiles = (event) => {
   const files = Array.from(event.target.files || [])
   selectedFiles.value = files
+}
+
+/**
+ * 移除已选的图片
+ * @param {number} index - 图片索引
+ */
+const removeFile = (index) => {
+  selectedFiles.value = selectedFiles.value.filter((_, i) => i !== index)
 }
 
 const handlePublish = async () => {
@@ -224,6 +239,28 @@ onMounted(async () => {
             </label>
             <div class="text-xs text-gray-500">
               已选择 {{ selectedFiles.length }} 张
+            </div>
+          </div>
+
+          <!-- 图片预览区域 -->
+          <div v-if="selectedFiles.length > 0" class="grid grid-cols-4 sm:grid-cols-6 gap-3">
+            <div
+              v-for="(url, idx) in previewUrls"
+              :key="idx"
+              class="relative group"
+            >
+              <img
+                :src="url"
+                alt="预览"
+                class="w-full aspect-square object-cover rounded-lg border border-gray-200"
+              />
+              <button
+                type="button"
+                class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gray-900 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                @click="removeFile(idx)"
+              >
+                ×
+              </button>
             </div>
           </div>
 
