@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { getAdminSiteConfig, updateAdminSiteConfig } from '@/api/adminSiteConfig'
+import { computed, onMounted, ref } from 'vue'
+import { getAdminSiteConfig, updateAdminSiteConfig, uploadSiteConfigLogo } from '@/api/adminSiteConfig'
+import { getMediaUrl } from '@/utils/url'
 
 const loading = ref(false)
 const saving = ref(false)
@@ -16,10 +17,26 @@ const form = ref({
   footerText: ''
 })
 
+// 待上传的 Logo 文件
+const pendingLogoFile = ref(null)
+
+/**
+ * Logo 预览 URL
+ * 如果有待上传的文件则显示本地预览，否则显示已保存的 Logo
+ */
+const logoPreviewUrl = computed(() => {
+  if (pendingLogoFile.value) {
+    return URL.createObjectURL(pendingLogoFile.value)
+  }
+  if (!form.value.logo) return ''
+  return getMediaUrl(form.value.logo)
+})
+
 const load = async () => {
   loading.value = true
   errorMsg.value = ''
   successMsg.value = ''
+  pendingLogoFile.value = null
   try {
     const res = await getAdminSiteConfig()
     if (res.code === 200) {
@@ -40,6 +57,17 @@ const load = async () => {
   }
 }
 
+/**
+ * 处理 Logo 文件选择（仅预览，不立即上传）
+ * @param {Event} event 文件选择事件
+ */
+const handleLogoFile = (event) => {
+  const file = event.target.files?.[0]
+  if (!file) return
+  event.target.value = ''
+  pendingLogoFile.value = file
+}
+
 const save = async () => {
   errorMsg.value = ''
   successMsg.value = ''
@@ -50,9 +78,21 @@ const save = async () => {
   }
   saving.value = true
   try {
+    // 如果有待上传的 Logo 文件，先上传
+    if (pendingLogoFile.value) {
+      const uploadRes = await uploadSiteConfigLogo(pendingLogoFile.value)
+      if (uploadRes.code === 200) {
+        pendingLogoFile.value = null
+      } else {
+        errorMsg.value = uploadRes.message || 'Logo 上传失败'
+        saving.value = false
+        return
+      }
+    }
+
+    // 保存其他配置
     const res = await updateAdminSiteConfig({
       siteName,
-      logo: form.value.logo,
       contactEmail: form.value.contactEmail,
       contactPhone: form.value.contactPhone,
       icp: form.value.icp,
@@ -117,13 +157,29 @@ onMounted(load)
         />
       </div>
       <div class="space-y-1.5">
-        <label class="block text-sm font-medium text-gray-700">Logo URL</label>
-        <input
-          v-model="form.logo"
-          type="text"
-          placeholder="http(s):// 或 /uploads/..."
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
-        />
+        <label class="block text-sm font-medium text-gray-700">网站 Logo</label>
+        <div class="flex items-center gap-4">
+          <!-- Logo 预览 -->
+          <div class="w-16 h-16 rounded-lg border border-gray-200 bg-gray-50 overflow-hidden flex items-center justify-center flex-shrink-0">
+            <img
+              v-if="logoPreviewUrl"
+              :src="logoPreviewUrl"
+              alt="Logo"
+              class="w-full h-full object-cover"
+            />
+            <span v-else class="text-xs text-gray-400">无 Logo</span>
+          </div>
+          <!-- 上传按钮 -->
+          <label class="inline-flex items-center h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              class="hidden"
+              @change="handleLogoFile"
+            />
+            选择图片
+          </label>
+        </div>
       </div>
       <div class="space-y-1.5">
         <label class="block text-sm font-medium text-gray-700">联系邮箱</label>
