@@ -16,15 +16,8 @@ for i in {1..60}; do
   sleep 1
 done
 
-cleanup() {
-  echo
-  echo "停止后端容器..."
-  docker-compose down
-}
-trap cleanup EXIT INT TERM
-
 cd "$ROOT_DIR/pet-front"
 if [ ! -d node_modules ]; then
   npm install
 fi
-npm run dev
+npm run dev -- --host 0.0.0.0
