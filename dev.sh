@@ -5,7 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$ROOT_DIR"
 
-docker compose up -d --build backend
+docker-compose up -d --build backend
 
 echo "等待后端启动..."
 for i in {1..60}; do
@@ -19,7 +19,7 @@ done
 cleanup() {
   echo
   echo "停止后端容器..."
-  docker compose down
+  docker-compose down
 }
 trap cleanup EXIT INT TERM
 
