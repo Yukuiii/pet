@@ -47,7 +47,7 @@ const nav = [
   <div class="min-h-screen bg-slate-100">
     <div class="w-full px-3 py-4 sm:px-4 lg:px-5 lg:py-6">
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
-        <aside class="rounded-2xl border border-slate-200 bg-white p-5 lg:sticky lg:top-6 lg:h-fit">
+        <aside class="h-full rounded-2xl border border-slate-200 bg-white p-5">
           <div class="flex items-center gap-3">
             <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-900 text-sm font-semibold text-white">
               管
