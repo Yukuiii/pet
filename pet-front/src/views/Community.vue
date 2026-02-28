@@ -361,13 +361,13 @@ const formatTime = (timeStr) => {
             {{ p.content }}
           </div>
 
-          <div v-if="p.images && p.images.length" class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div v-if="p.images && p.images.length" class="mt-4 flex flex-wrap gap-2">
             <img
               v-for="(img, idx) in p.images"
               :key="idx"
               :src="getMediaUrl(img)"
               alt="img"
-              class="w-full aspect-square object-cover rounded-lg border border-gray-200"
+              class="h-20 w-20 rounded-lg border border-gray-200 object-cover sm:h-24 sm:w-24"
             />
           </div>
 

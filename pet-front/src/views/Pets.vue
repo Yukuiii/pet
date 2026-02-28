@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { createPet, deletePet, listMyPets } from '@/api/pet'
+import { getMediaUrl } from '@/utils/url'
 
 const router = useRouter()
 
@@ -9,6 +10,7 @@ const loading = ref(false)
 const saving = ref(false)
 const errorMsg = ref('')
 const successMsg = ref('')
+const createModalVisible = ref(false)
 
 const pets = ref([])
 
@@ -18,6 +20,13 @@ const form = ref({
   gender: '',
   birthday: ''
 })
+
+/**
+ * 重置新增宠物表单
+ */
+const resetCreateForm = () => {
+  form.value = { name: '', breed: '', gender: '', birthday: '' }
+}
 
 const genderLabel = (gender) => {
   if (gender === 0) return '公'
@@ -51,6 +60,24 @@ const loadPets = async () => {
   }
 }
 
+/**
+ * 打开新增宠物弹窗
+ */
+const openCreateModal = () => {
+  errorMsg.value = ''
+  successMsg.value = ''
+  resetCreateForm()
+  createModalVisible.value = true
+}
+
+/**
+ * 关闭新增宠物弹窗
+ */
+const closeCreateModal = () => {
+  if (saving.value) return
+  createModalVisible.value = false
+}
+
 const handleCreate = async () => {
   successMsg.value = ''
   errorMsg.value = ''
@@ -70,7 +97,8 @@ const handleCreate = async () => {
     const res = await createPet(payload)
     if (res.code === 200) {
       successMsg.value = '已添加宠物档案'
-      form.value = { name: '', breed: '', gender: '', birthday: '' }
+      resetCreateForm()
+      createModalVisible.value = false
       await loadPets()
     } else {
       errorMsg.value = res.message || '添加失败'
@@ -127,15 +155,99 @@ onMounted(async () => {
       </div>
     </div>
 
-      <div v-if="errorMsg" class="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm">
-        {{ errorMsg }}
-      </div>
-      <div v-if="successMsg" class="mb-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
-        {{ successMsg }}
+    <div v-if="errorMsg" class="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+      {{ errorMsg }}
+    </div>
+    <div v-if="successMsg" class="mb-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
+      {{ successMsg }}
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">我的宠物</h2>
+        <div class="flex items-center gap-2">
+          <button
+            class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
+            @click="openCreateModal"
+          >
+            新增宠物
+          </button>
+          <button
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            :disabled="loading"
+            @click="loadPets"
+          >
+            {{ loading ? '刷新中...' : '刷新' }}
+          </button>
+        </div>
       </div>
 
-      <div class="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">新增宠物</h2>
+      <div v-if="empty" class="text-sm text-gray-500">还没有宠物档案，先新增一个吧。</div>
+
+      <div v-else class="space-y-3">
+        <div
+          v-for="p in pets"
+          :key="p.id"
+          class="flex items-center justify-between gap-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+        >
+          <div class="min-w-0 flex items-center gap-3">
+            <div class="h-12 w-12 rounded-lg border border-gray-200 bg-gray-100 overflow-hidden flex items-center justify-center flex-shrink-0">
+              <img
+                v-if="p.photo"
+                :src="getMediaUrl(p.photo)"
+                alt="宠物图片"
+                class="h-full w-full object-cover"
+              />
+              <div v-else class="text-xs text-gray-400">无图</div>
+            </div>
+            <div class="min-w-0">
+              <div class="text-sm font-medium text-gray-900 truncate">
+                {{ p.name }}
+              </div>
+              <div class="text-xs text-gray-500 mt-1">
+                <span>{{ p.breed || '未知品种' }}</span>
+                <span class="mx-2">·</span>
+                <span>{{ genderLabel(p.gender) }}</span>
+                <span class="mx-2">·</span>
+                <span>{{ p.birthday || '未知生日' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
+              @click="toDetail(p.id)"
+            >
+              详情
+            </button>
+            <button
+              class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              @click="handleDelete(p.id)"
+            >
+              删除
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-if="createModalVisible"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4"
+      @click.self="closeCreateModal"
+    >
+      <div class="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl">
+        <div class="flex items-center justify-between gap-4 mb-4">
+          <h2 class="text-lg font-semibold text-gray-900">新增宠物</h2>
+          <button
+            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            :disabled="saving"
+            @click="closeCreateModal"
+          >
+            关闭
+          </button>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="space-y-1.5 sm:col-span-2">
             <label class="block text-sm font-medium text-gray-700">姓名</label>
@@ -175,9 +287,16 @@ onMounted(async () => {
             />
           </div>
         </div>
-        <div class="mt-5 flex items-center justify-end">
+        <div class="mt-5 flex items-center justify-end gap-2">
           <button
-            class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            :disabled="saving"
+            @click="closeCreateModal"
+          >
+            取消
+          </button>
+          <button
+            class="h-10 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             :disabled="saving"
             @click="handleCreate"
           >
@@ -185,55 +304,6 @@ onMounted(async () => {
           </button>
         </div>
       </div>
-
-      <div class="bg-white border border-gray-200 rounded-xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold text-gray-900">我的宠物</h2>
-          <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-            :disabled="loading"
-            @click="loadPets"
-          >
-            {{ loading ? '刷新中...' : '刷新' }}
-          </button>
-        </div>
-
-        <div v-if="empty" class="text-sm text-gray-500">还没有宠物档案，先新增一个吧。</div>
-
-        <div v-else class="space-y-3">
-          <div
-            v-for="p in pets"
-            :key="p.id"
-            class="flex items-center justify-between gap-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-          >
-            <div class="min-w-0">
-              <div class="text-sm font-medium text-gray-900 truncate">
-                {{ p.name }}
-              </div>
-              <div class="text-xs text-gray-500 mt-1">
-                <span>{{ p.breed || '未知品种' }}</span>
-                <span class="mx-2">·</span>
-                <span>{{ genderLabel(p.gender) }}</span>
-                <span class="mx-2">·</span>
-                <span>{{ p.birthday || '未知生日' }}</span>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <button
-                class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
-                @click="toDetail(p.id)"
-              >
-                详情
-              </button>
-              <button
-                class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                @click="handleDelete(p.id)"
-              >
-                删除
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
   </div>
 </template>
