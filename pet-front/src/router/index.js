@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import FrontLayout from '../views/FrontLayout.vue'
 import Profile from '../views/Profile.vue'
 import Pets from '../views/Pets.vue'
 import PetDetail from '../views/PetDetail.vue'
@@ -23,12 +24,6 @@ import AdminKnowledgeArticles from '../views/admin/AdminKnowledgeArticles.vue'
  */
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/login',
     name: 'Login',
     component: Login
@@ -39,46 +34,51 @@ const routes = [
     component: Register
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/pets',
-    name: 'Pets',
-    component: Pets,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/pets/:id',
-    name: 'PetDetail',
-    component: PetDetail,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/community',
-    name: 'Community',
-    component: Community,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/knowledge',
-    name: 'Knowledge',
-    component: Knowledge,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/knowledge/:id',
-    name: 'KnowledgeDetail',
-    component: KnowledgeDetail,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/announcements',
-    name: 'Announcements',
-    component: Announcements,
-    meta: { requiresAuth: true }
+    path: '/',
+    component: FrontLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: Profile
+      },
+      {
+        path: 'pets',
+        name: 'Pets',
+        component: Pets
+      },
+      {
+        path: 'pets/:id',
+        name: 'PetDetail',
+        component: PetDetail
+      },
+      {
+        path: 'community',
+        name: 'Community',
+        component: Community
+      },
+      {
+        path: 'knowledge',
+        name: 'Knowledge',
+        component: Knowledge
+      },
+      {
+        path: 'knowledge/:id',
+        name: 'KnowledgeDetail',
+        component: KnowledgeDetail
+      },
+      {
+        path: 'announcements',
+        name: 'Announcements',
+        component: Announcements
+      }
+    ]
   },
   {
     path: '/admin',

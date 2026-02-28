@@ -15,9 +15,21 @@ const me = computed(() => {
   }
 })
 
+/**
+ * 退出登录
+ */
 const logout = () => {
   localStorage.removeItem('user')
   router.replace('/login')
+}
+
+/**
+ * 判断菜单是否激活
+ * @param {string} path - 菜单路径
+ * @returns {boolean} 是否激活
+ */
+const isActive = (path) => {
+  return route.path === path || route.path.startsWith(`${path}/`)
 }
 
 const nav = [
@@ -32,50 +44,62 @@ const nav = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-6xl mx-auto px-6 py-8">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <h1 class="text-2xl font-semibold text-gray-900">后台管理</h1>
-          <p class="text-sm text-gray-500 mt-1">
-            {{ me?.nickname || me?.username || '管理员' }}
-          </p>
-        </div>
-        <div class="flex items-center gap-3">
-          <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-            @click="router.push('/')"
-          >
-            返回首页
-          </button>
-          <button
-            class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
-            @click="logout"
-          >
-            退出登录
-          </button>
-        </div>
-      </div>
+  <div class="min-h-screen bg-slate-100">
+    <div class="w-full px-3 py-4 sm:px-4 lg:px-5 lg:py-6">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
+        <aside class="rounded-2xl border border-slate-200 bg-white p-5 lg:sticky lg:top-6 lg:h-fit">
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-900 text-sm font-semibold text-white">
+              管
+            </div>
+            <div>
+              <div class="text-base font-semibold text-slate-900">后台管理</div>
+              <div class="text-xs text-slate-500">{{ me?.nickname || me?.username || '管理员' }}</div>
+            </div>
+          </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6">
-        <aside class="bg-white border border-gray-200 rounded-xl p-4">
-          <div class="text-xs font-medium text-gray-500 mb-3">菜单</div>
-          <div class="space-y-2">
+          <div class="mt-6">
+            <div class="mb-2 text-xs font-medium tracking-wide text-slate-500">菜单</div>
+            <div class="grid grid-cols-2 gap-2 lg:grid-cols-1">
+              <button
+                v-for="item in nav"
+                :key="item.path"
+                class="h-10 rounded-lg border px-3 text-left text-sm transition-colors"
+                :class="isActive(item.path)
+                  ? 'border-slate-900 bg-slate-900 text-white'
+                  : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'"
+                @click="router.push(item.path)"
+              >
+                {{ item.name }}
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <div class="truncate text-sm font-medium text-slate-900">
+              {{ me?.nickname || me?.username || '管理员' }}
+            </div>
+            <div class="mt-1 truncate text-xs text-slate-500">@{{ me?.username || '-' }}</div>
             <button
-              v-for="item in nav"
-              :key="item.path"
-              class="w-full h-10 px-3 rounded-lg text-sm text-left transition-colors"
-              :class="route.path === item.path
-                ? 'bg-gray-900 text-white'
-                : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'"
-              @click="router.push(item.path)"
+              class="mt-3 h-9 w-full rounded-lg border border-slate-200 bg-white text-sm text-slate-700 transition-colors hover:bg-slate-100"
+              @click="router.push('/')"
             >
-              {{ item.name }}
+              返回首页
+            </button>
+            <button
+              class="mt-2 h-9 w-full rounded-lg bg-slate-900 text-sm text-white transition-colors hover:bg-slate-800"
+              @click="logout"
+            >
+              退出登录
             </button>
           </div>
         </aside>
 
         <main class="min-w-0">
+          <div class="mb-4 rounded-2xl border border-slate-200 bg-white p-5">
+            <h1 class="text-xl font-semibold text-slate-900">后台管理</h1>
+            <p class="mt-1 text-sm text-slate-500">集中管理用户、内容与站点配置</p>
+          </div>
           <router-view />
         </main>
       </div>
