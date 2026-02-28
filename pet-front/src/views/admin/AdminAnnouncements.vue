@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { createAnnouncement, pageAnnouncements, updateAnnouncementStatus } from '@/api/adminAnnouncement'
+import { formatDateTime } from '@/utils/datetime'
 
 const loading = ref(false)
 const errorMsg = ref('')
@@ -115,7 +116,7 @@ onMounted(load)
         <p class="text-sm text-gray-500 mt-1">发布公告并设置有效/无效状态</p>
       </div>
       <button
-        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
         :disabled="loading"
         @click="load"
       >
@@ -137,24 +138,24 @@ onMounted(load)
           v-model="form.title"
           type="text"
           placeholder="公告标题"
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
         <textarea
           v-model="form.content"
           rows="4"
           placeholder="公告内容"
-          class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         ></textarea>
         <div class="flex items-center justify-between gap-3">
           <select
             v-model="form.status"
-            class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+            class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
           >
             <option :value="0">有效</option>
             <option :value="1">无效</option>
           </select>
           <button
-            class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-all"
+            class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 transition-all"
             :disabled="creating"
             @click="handleCreate"
           >
@@ -169,12 +170,12 @@ onMounted(load)
         v-model="keyword"
         type="text"
         placeholder="标题/内容关键字"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @keyup.enter="applyFilters"
       />
       <select
         v-model="status"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @change="applyFilters"
       >
         <option value="">全部状态</option>
@@ -182,7 +183,7 @@ onMounted(load)
         <option value="1">无效</option>
       </select>
       <button
-        class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
+        class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition-all"
         :disabled="loading"
         @click="applyFilters"
       >
@@ -204,10 +205,10 @@ onMounted(load)
               {{ a.title }}
               <span class="ml-2 text-xs text-gray-500">（{{ statusText(a.status) }}）</span>
             </div>
-            <div class="text-xs text-gray-500 mt-1">{{ a.createTime }}</div>
+            <div class="text-xs text-gray-500 mt-1">{{ formatDateTime(a.createTime) }}</div>
           </div>
           <button
-            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             @click="toggleStatus(a)"
           >
             {{ a.status === 1 ? '设为有效' : '设为无效' }}
@@ -225,14 +226,14 @@ onMounted(load)
       </div>
       <div class="flex items-center gap-2">
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page <= 1"
           @click="page -= 1; load()"
         >
           上一页
         </button>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page >= totalPages"
           @click="page += 1; load()"
         >
@@ -242,4 +243,3 @@ onMounted(load)
     </div>
   </div>
 </template>
-

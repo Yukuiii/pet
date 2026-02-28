@@ -175,13 +175,13 @@ onMounted(async () => {
         </div>
         <div class="flex items-center gap-3">
           <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             @click="router.push('/')"
           >
             返回首页
           </button>
           <button
-            class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
+            class="h-10 px-4 rounded-lg bg-cyan-600 text-sm text-white hover:bg-cyan-500 transition-colors"
             @click="logout"
           >
             退出登录
@@ -205,7 +205,7 @@ onMounted(async () => {
               <div v-else class="text-gray-400 text-sm">无头像</div>
             </div>
             <label
-              class="mt-3 inline-flex w-full items-center justify-center h-10 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+              class="mt-3 inline-flex w-full items-center justify-center h-10 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors cursor-pointer"
             >
               <input type="file" accept="image/*" class="hidden" :disabled="uploadingAvatar" @change="handleAvatarChange" />
               {{ uploadingAvatar ? '上传中...' : '更换头像' }}
@@ -233,14 +233,14 @@ onMounted(async () => {
                   v-model="form.nickname"
                   type="text"
                   placeholder="请输入昵称"
-                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             <div class="mt-5 flex items-center justify-end">
               <button
-                class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 :disabled="savingProfile || loading"
                 @click="handleSaveProfile"
               >
@@ -261,7 +261,7 @@ onMounted(async () => {
               v-model="pwdForm.oldPassword"
               type="password"
               placeholder="请输入旧密码"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
           <div class="space-y-1.5">
@@ -271,7 +271,7 @@ onMounted(async () => {
               v-model="pwdForm.newPassword"
               type="password"
               placeholder="至少 6 位"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
           <div class="space-y-1.5">
@@ -281,14 +281,14 @@ onMounted(async () => {
               v-model="pwdForm.confirmNewPassword"
               type="password"
               placeholder="再输入一次新密码"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
         </div>
 
         <div class="mt-5 flex items-center justify-end">
           <button
-            class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             :disabled="savingPassword || loading"
             @click="handleSavePassword"
           >

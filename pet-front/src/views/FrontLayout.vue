@@ -68,10 +68,10 @@ onMounted(loadSiteConfig)
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-100">
+  <div class="min-h-screen bg-transparent">
     <div class="w-full px-3 py-4 sm:px-4 lg:px-5 lg:py-6">
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
-        <aside class="h-full rounded-2xl border border-slate-200 bg-white p-5">
+        <aside class="h-full rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-[1px]">
           <div class="flex items-center gap-3">
             <img
               v-if="siteConfig?.logo"
@@ -93,8 +93,8 @@ onMounted(loadSiteConfig)
                 :key="item.path"
                 class="h-10 rounded-lg border px-3 text-left text-sm transition-colors"
                 :class="isActive(item.path)
-                  ? 'border-slate-900 bg-slate-900 text-white'
-                  : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'"
+                  ? 'border-cyan-600 bg-cyan-600 text-white'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-cyan-200 hover:bg-cyan-50'"
                 @click="router.push(item.path)"
               >
                 {{ item.name }}
@@ -103,8 +103,8 @@ onMounted(loadSiteConfig)
                 v-if="me?.role === 'admin'"
                 class="h-10 rounded-lg border px-3 text-left text-sm transition-colors"
                 :class="isActive('/admin/users')
-                  ? 'border-slate-900 bg-slate-900 text-white'
-                  : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'"
+                  ? 'border-cyan-600 bg-cyan-600 text-white'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-cyan-200 hover:bg-cyan-50'"
                 @click="router.push('/admin/users')"
               >
                 后台管理
@@ -112,7 +112,7 @@ onMounted(loadSiteConfig)
             </div>
           </div>
 
-          <div class="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <div class="mt-6 rounded-xl border border-cyan-100 bg-cyan-50/60 p-4">
             <div class="flex items-center gap-3">
               <img
                 v-if="me?.avatar"
@@ -122,7 +122,7 @@ onMounted(loadSiteConfig)
               />
               <div
                 v-else
-                class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-200 text-sm font-medium text-slate-600"
+                class="flex h-11 w-11 items-center justify-center rounded-full bg-cyan-100 text-sm font-medium text-cyan-700"
               >
                 {{ (me?.nickname || me?.username || 'U').charAt(0).toUpperCase() }}
               </div>
@@ -132,7 +132,7 @@ onMounted(loadSiteConfig)
               </div>
             </div>
             <button
-              class="mt-3 h-9 w-full rounded-lg bg-slate-900 text-sm text-white transition-colors hover:bg-slate-800"
+              class="mt-3 h-9 w-full rounded-lg bg-cyan-600 text-sm text-white shadow-sm transition-colors hover:bg-cyan-500"
               @click="logout"
             >
               退出登录

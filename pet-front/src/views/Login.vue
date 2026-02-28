@@ -106,7 +106,7 @@ const goToRegister = () => {
               placeholder="请输入用户名"
               class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm
                      placeholder:text-gray-400 focus:outline-none focus:ring-2
-                     focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                     focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
 
@@ -123,7 +123,7 @@ const goToRegister = () => {
               placeholder="请输入密码"
               class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm
                      placeholder:text-gray-400 focus:outline-none focus:ring-2
-                     focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                     focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
 
@@ -145,9 +145,9 @@ const goToRegister = () => {
           <button
             type="submit"
             :disabled="loading"
-            class="w-full h-11 rounded-lg bg-gray-900 text-white text-sm font-medium
-                   hover:bg-gray-800 active:scale-[0.98] focus:outline-none focus:ring-2
-                   focus:ring-gray-900 focus:ring-offset-2 disabled:opacity-50
+            class="w-full h-11 rounded-lg bg-cyan-600 text-white text-sm font-medium
+                   hover:bg-cyan-500 active:scale-[0.98] focus:outline-none focus:ring-2
+                   focus:ring-cyan-500 focus:ring-offset-2 disabled:opacity-50
                    disabled:cursor-not-allowed transition-all"
           >
             {{ loading ? '登录中...' : '登录' }}

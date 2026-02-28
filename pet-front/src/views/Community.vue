@@ -236,7 +236,7 @@ const formatTime = (timeStr) => {
           <p class="text-sm text-gray-500 mt-1">分享宠物日常与心得</p>
         </div>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           @click="router.push('/')"
         >
           返回首页
@@ -258,11 +258,11 @@ const formatTime = (timeStr) => {
             v-model="form.content"
             rows="4"
             placeholder="说点什么吧..."
-            class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+            class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
           ></textarea>
 
           <div class="flex items-center justify-between gap-4">
-            <label class="inline-flex items-center h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
+            <label class="inline-flex items-center h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors cursor-pointer">
               <input
                 type="file"
                 multiple
@@ -291,7 +291,7 @@ const formatTime = (timeStr) => {
               />
               <button
                 type="button"
-                class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gray-900 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-cyan-600 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 @click="removeFile(idx)"
               >
                 ×
@@ -301,7 +301,7 @@ const formatTime = (timeStr) => {
 
           <div class="flex items-center justify-end">
             <button
-              class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               :disabled="posting"
               @click="handlePublish"
             >
@@ -314,7 +314,7 @@ const formatTime = (timeStr) => {
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-semibold text-gray-900">最新动态</h2>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           :disabled="loading"
           @click="loadPosts"
         >
@@ -350,7 +350,7 @@ const formatTime = (timeStr) => {
 
             <button
               v-if="me && p.author?.id === me.id"
-              class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
               @click="handleDeletePost(p.id)"
             >
               删除
@@ -373,7 +373,7 @@ const formatTime = (timeStr) => {
 
           <div class="mt-5 flex items-center justify-between">
             <button
-              class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
               @click="toggleComments(p.id)"
             >
               {{ expanded.has(p.id) ? '收起评论' : '查看评论' }}
@@ -386,10 +386,10 @@ const formatTime = (timeStr) => {
                 v-model="commentDraftByPostId[p.id]"
                 type="text"
                 placeholder="写下你的评论..."
-                class="flex-1 h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                class="flex-1 h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
               />
               <button
-                class="h-11 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
+                class="h-11 px-4 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition-all"
                 @click="handleAddComment(p.id)"
               >
                 发送
@@ -420,7 +420,7 @@ const formatTime = (timeStr) => {
                   </div>
                   <button
                     v-if="me && c.author?.id === me.id"
-                    class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0"
+                    class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors flex-shrink-0"
                     @click="handleDeleteComment(p.id, c.id)"
                   >
                     删除

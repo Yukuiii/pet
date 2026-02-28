@@ -63,7 +63,7 @@ onMounted(async () => {
           <p class="text-sm text-gray-500 mt-1">按分类检索宠物养护文章</p>
         </div>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           @click="router.push('/')"
         >
           返回首页
@@ -80,8 +80,8 @@ onMounted(async () => {
           <button
             class="h-10 px-4 rounded-lg text-sm transition-all"
             :class="activeCategory === null
-              ? 'bg-gray-900 text-white'
-              : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'"
+              ? 'bg-cyan-600 text-white'
+              : 'bg-white border border-gray-200 text-gray-700 hover:bg-cyan-50'"
             @click="activeCategory = null; loadArticles()"
           >
             全部
@@ -91,8 +91,8 @@ onMounted(async () => {
             :key="c.id"
             class="h-10 px-4 rounded-lg text-sm transition-all"
             :class="activeCategory === c.id
-              ? 'bg-gray-900 text-white'
-              : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'"
+              ? 'bg-cyan-600 text-white'
+              : 'bg-white border border-gray-200 text-gray-700 hover:bg-cyan-50'"
             @click="activeCategory = c.id; loadArticles()"
           >
             {{ c.name }}
@@ -102,10 +102,10 @@ onMounted(async () => {
               v-model="keyword"
               type="text"
               placeholder="关键字"
-              class="h-10 px-3 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="h-10 px-3 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
             <button
-              class="h-10 px-4 rounded-lg bg-gray-900 text-white text-sm hover:bg-gray-800 transition-colors"
+              class="h-10 px-4 rounded-lg bg-cyan-600 text-white text-sm hover:bg-cyan-500 transition-colors"
               @click="loadArticles"
             >
               搜索
@@ -118,7 +118,7 @@ onMounted(async () => {
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-semibold text-gray-900">文章列表</h2>
           <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             :disabled="loading"
             @click="loadArticles"
           >
@@ -143,7 +143,7 @@ onMounted(async () => {
               </div>
             </div>
             <button
-              class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
+              class="h-10 px-4 rounded-lg bg-cyan-600 text-sm text-white hover:bg-cyan-500 transition-colors"
               @click="toDetail(a.id)"
             >
               查看

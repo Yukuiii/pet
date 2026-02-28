@@ -248,7 +248,7 @@ onMounted(async () => {
           </p>
         </div>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           @click="toList"
         >
           返回列表
@@ -271,7 +271,7 @@ onMounted(async () => {
               <div v-else class="text-gray-400 text-sm">无照片</div>
             </div>
             <label
-              class="mt-3 inline-flex w-full items-center justify-center h-10 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+              class="mt-3 inline-flex w-full items-center justify-center h-10 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors cursor-pointer"
             >
               <input type="file" accept="image/*" class="hidden" :disabled="uploading" @change="handlePhotoChange" />
               {{ uploading ? '上传中...' : '更换照片' }}
@@ -285,7 +285,7 @@ onMounted(async () => {
                 <input
                   v-model="form.name"
                   type="text"
-                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
                 />
               </div>
               <div class="space-y-1.5">
@@ -293,14 +293,14 @@ onMounted(async () => {
                 <input
                   v-model="form.breed"
                   type="text"
-                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
                 />
               </div>
               <div class="space-y-1.5">
                 <label class="block text-sm font-medium text-gray-700">性别</label>
                 <select
                   v-model="form.gender"
-                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
                 >
                   <option value="">未知</option>
                   <option value="0">公</option>
@@ -312,14 +312,14 @@ onMounted(async () => {
                 <input
                   v-model="form.birthday"
                   type="date"
-                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+                  class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             <div class="mt-5 flex items-center justify-end">
               <button
-                class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 :disabled="saving || loading"
                 @click="handleSave"
               >
@@ -334,7 +334,7 @@ onMounted(async () => {
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-semibold text-gray-900">健康记录</h2>
           <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             :disabled="recordsLoading"
             @click="loadRecords"
           >
@@ -349,7 +349,7 @@ onMounted(async () => {
               <input
                 v-model="recordForm.recordTime"
                 type="datetime-local"
-                class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               />
             </div>
             <div class="space-y-1.5">
@@ -358,7 +358,7 @@ onMounted(async () => {
                 v-model="recordForm.title"
                 type="text"
                 placeholder="例如：狂犬疫苗"
-                class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               />
             </div>
             <div class="space-y-1.5 sm:col-span-2">
@@ -367,20 +367,20 @@ onMounted(async () => {
                 v-model="recordForm.content"
                 rows="3"
                 placeholder="可选"
-                class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               ></textarea>
             </div>
           </div>
           <div class="mt-4 flex items-center justify-end gap-2">
             <button
               v-if="editingRecordId"
-              class="h-11 px-5 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              class="h-11 px-5 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
               @click="cancelEditRecord"
             >
               取消编辑
             </button>
             <button
-              class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
+              class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition-all"
               @click="handleAddRecord"
             >
               {{ editingRecordId ? '保存修改' : '添加记录' }}
@@ -406,13 +406,13 @@ onMounted(async () => {
               </div>
               <div class="flex items-center gap-2">
                 <button
-                  class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
                   @click="handleEditRecord(r)"
                 >
                   编辑
                 </button>
                 <button
-                  class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
                   @click="handleDeleteRecord(r.id)"
                 >
                   删除

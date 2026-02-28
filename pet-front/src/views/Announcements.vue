@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { listAnnouncements } from '@/api/announcement'
+import { formatDateTime } from '@/utils/datetime'
 
 const loading = ref(false)
 const errorMsg = ref('')
@@ -39,7 +40,7 @@ onMounted(load)
           <p class="mt-1 text-sm text-gray-500">查看最新平台通知与动态公告</p>
         </div>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           :disabled="loading" @click="load">
           {{ loading ? '刷新中...' : '刷新' }}
         </button>
@@ -56,7 +57,7 @@ onMounted(load)
       <div v-else class="space-y-3">
         <div v-for="a in list" :key="a.id" class="border border-gray-200 rounded-xl p-5">
           <div class="text-sm font-medium text-gray-900">{{ a.title }}</div>
-          <div class="text-xs text-gray-500 mt-1">{{ a.createTime }}</div>
+          <div class="text-xs text-gray-500 mt-1">{{ formatDateTime(a.createTime) }}</div>
           <div class="mt-3 text-sm text-gray-800 whitespace-pre-wrap">{{ a.content }}</div>
         </div>
       </div>

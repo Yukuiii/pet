@@ -40,7 +40,7 @@ onMounted(load)
           <p class="text-sm text-gray-500 mt-1">{{ article?.categoryName || '' }}</p>
         </div>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           @click="router.push('/knowledge')"
         >
           返回列表

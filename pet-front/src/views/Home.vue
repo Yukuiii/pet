@@ -174,7 +174,7 @@ const formatTime = (timeStr) => {
           <p class="mt-1 text-sm text-slate-500">最新动态预览</p>
         </div>
         <button
-          class="h-10 rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-700 transition-colors hover:bg-slate-100"
+          class="h-10 rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-700 transition-colors hover:bg-cyan-50"
           @click="goCommunity"
         >
           查看更多
@@ -188,7 +188,7 @@ const formatTime = (timeStr) => {
         <div class="flex items-center justify-between gap-3">
           <div class="truncate text-sm font-medium text-slate-900">最新公告：{{ latest.title }}</div>
           <button
-            class="h-8 rounded-lg border border-slate-200 bg-white px-3 text-xs text-slate-700 transition-colors hover:bg-slate-100"
+            class="h-8 rounded-lg border border-slate-200 bg-white px-3 text-xs text-slate-700 transition-colors hover:bg-cyan-50"
             @click="goAnnouncements"
           >
             更多公告

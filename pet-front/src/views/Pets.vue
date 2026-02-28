@@ -147,7 +147,7 @@ onMounted(async () => {
           <p class="text-sm text-gray-500 mt-1">管理你的宠物信息与健康记录</p>
         </div>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           @click="toHome"
         >
           返回首页
@@ -167,13 +167,13 @@ onMounted(async () => {
         <h2 class="text-lg font-semibold text-gray-900">我的宠物</h2>
         <div class="flex items-center gap-2">
           <button
-            class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
+            class="h-10 px-4 rounded-lg bg-cyan-600 text-sm text-white hover:bg-cyan-500 transition-colors"
             @click="openCreateModal"
           >
             新增宠物
           </button>
           <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             :disabled="loading"
             @click="loadPets"
           >
@@ -215,13 +215,13 @@ onMounted(async () => {
           </div>
           <div class="flex items-center gap-2">
             <button
-              class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors"
+              class="h-10 px-4 rounded-lg bg-cyan-600 text-sm text-white hover:bg-cyan-500 transition-colors"
               @click="toDetail(p.id)"
             >
               详情
             </button>
             <button
-              class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
               @click="handleDelete(p.id)"
             >
               删除
@@ -240,7 +240,7 @@ onMounted(async () => {
         <div class="flex items-center justify-between gap-4 mb-4">
           <h2 class="text-lg font-semibold text-gray-900">新增宠物</h2>
           <button
-            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             :disabled="saving"
             @click="closeCreateModal"
           >
@@ -255,7 +255,7 @@ onMounted(async () => {
               v-model="form.name"
               type="text"
               placeholder="例如：豆豆"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
           <div class="space-y-1.5">
@@ -264,14 +264,14 @@ onMounted(async () => {
               v-model="form.breed"
               type="text"
               placeholder="例如：金毛"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
           <div class="space-y-1.5">
             <label class="block text-sm font-medium text-gray-700">性别</label>
             <select
               v-model="form.gender"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             >
               <option value="">未知</option>
               <option value="0">公</option>
@@ -283,20 +283,20 @@ onMounted(async () => {
             <input
               v-model="form.birthday"
               type="date"
-              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+              class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
             />
           </div>
         </div>
         <div class="mt-5 flex items-center justify-end gap-2">
           <button
-            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             :disabled="saving"
             @click="closeCreateModal"
           >
             取消
           </button>
           <button
-            class="h-10 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            class="h-10 px-4 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             :disabled="saving"
             @click="handleCreate"
           >

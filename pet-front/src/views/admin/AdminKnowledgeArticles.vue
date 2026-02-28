@@ -176,7 +176,7 @@ onMounted(load)
         <p class="text-sm text-gray-500 mt-1">发布、编辑、删除养护知识文章</p>
       </div>
       <button
-        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
         :disabled="loading"
         @click="load"
       >
@@ -196,7 +196,7 @@ onMounted(load)
         <div class="text-sm font-medium text-gray-900">{{ editingId ? '编辑文章' : '发布文章' }}</div>
         <button
           v-if="editingId"
-          class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           @click="resetForm"
         >
           取消编辑
@@ -205,7 +205,7 @@ onMounted(load)
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <select
           v-model="form.categoryId"
-          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         >
           <option value="">选择分类</option>
           <option v-for="c in categories" :key="c.id" :value="String(c.id)">{{ c.name }}</option>
@@ -214,29 +214,29 @@ onMounted(load)
           v-model="form.title"
           type="text"
           placeholder="标题"
-          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
         <input
           v-model="form.summary"
           type="text"
           placeholder="摘要（可选）"
-          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
         <input
           v-model="form.cover"
           type="text"
           placeholder="封面URL（可选）"
-          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
         <textarea
           v-model="form.content"
           rows="8"
           placeholder="正文"
-          class="lg:col-span-2 w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="lg:col-span-2 w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         ></textarea>
         <div class="lg:col-span-2">
           <button
-            class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-all"
+            class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 disabled:opacity-50 transition-all"
             :disabled="saving"
             @click="submit"
           >
@@ -249,7 +249,7 @@ onMounted(load)
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-3 mb-5">
       <select
         v-model="categoryId"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @change="applyFilters"
       >
         <option value="">全部分类</option>
@@ -259,12 +259,12 @@ onMounted(load)
         v-model="keyword"
         type="text"
         placeholder="标题/正文关键字"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @keyup.enter="applyFilters"
       />
       <div></div>
       <button
-        class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
+        class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition-all"
         :disabled="loading"
         @click="applyFilters"
       >
@@ -296,13 +296,13 @@ onMounted(load)
             <td class="py-3 pr-4">
               <div class="flex items-center gap-2">
                 <button
-                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-cyan-50 transition-colors"
                   @click="edit(a)"
                 >
                   编辑
                 </button>
                 <button
-                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-cyan-50 transition-colors"
                   @click="remove(a)"
                 >
                   删除
@@ -320,14 +320,14 @@ onMounted(load)
       </div>
       <div class="flex items-center gap-2">
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page <= 1"
           @click="page -= 1; load()"
         >
           上一页
         </button>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page >= totalPages"
           @click="page += 1; load()"
         >

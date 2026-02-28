@@ -96,7 +96,7 @@ onMounted(load)
         <p class="text-sm text-gray-500 mt-1">查询用户、封禁/解封、授予/撤销管理员</p>
       </div>
       <button
-        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
         :disabled="loading"
         @click="load"
       >
@@ -116,12 +116,12 @@ onMounted(load)
         v-model="keyword"
         type="text"
         placeholder="用户名/邮箱/昵称"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @keyup.enter="applyFilters"
       />
       <select
         v-model="status"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @change="applyFilters"
       >
         <option value="">全部状态</option>
@@ -130,7 +130,7 @@ onMounted(load)
       </select>
       <select
         v-model="role"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @change="applyFilters"
       >
         <option value="">全部角色</option>
@@ -138,7 +138,7 @@ onMounted(load)
         <option value="admin">管理员</option>
       </select>
       <button
-        class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
+        class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition-all"
         :disabled="loading"
         @click="applyFilters"
       >
@@ -174,13 +174,13 @@ onMounted(load)
             <td class="py-3 pr-4">
               <div class="flex items-center gap-2">
                 <button
-                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-cyan-50 transition-colors"
                   @click="toggleStatus(u)"
                 >
                   {{ u.status === 1 ? '解封' : '封禁' }}
                 </button>
                 <button
-                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors"
+                  class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-cyan-50 transition-colors"
                   @click="toggleRole(u)"
                 >
                   {{ u.role === 'admin' ? '撤销管理员' : '设为管理员' }}
@@ -198,14 +198,14 @@ onMounted(load)
       </div>
       <div class="flex items-center gap-2">
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page <= 1"
           @click="page -= 1; load()"
         >
           上一页
         </button>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page >= totalPages"
           @click="page += 1; load()"
         >

@@ -76,7 +76,7 @@ onMounted(load)
         <p class="text-sm text-gray-500 mt-1">分页查看所有评论并删除违规内容</p>
       </div>
       <button
-        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
         :disabled="loading"
         @click="load"
       >
@@ -96,25 +96,25 @@ onMounted(load)
         v-model="keyword"
         type="text"
         placeholder="评论关键字"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @keyup.enter="applyFilters"
       />
       <input
         v-model="postId"
         type="text"
         placeholder="动态ID（可选）"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @keyup.enter="applyFilters"
       />
       <input
         v-model="authorId"
         type="text"
         placeholder="评论用户ID（可选）"
-        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+        class="h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         @keyup.enter="applyFilters"
       />
       <button
-        class="h-11 px-5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
+        class="h-11 px-5 rounded-lg bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition-all"
         :disabled="loading"
         @click="applyFilters"
       >
@@ -138,7 +138,7 @@ onMounted(load)
             <div class="text-xs text-gray-500 mt-1">{{ c.createTime }}</div>
           </div>
           <button
-            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            class="h-9 px-3 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
             @click="handleDelete(c)"
           >
             删除
@@ -156,14 +156,14 @@ onMounted(load)
       </div>
       <div class="flex items-center gap-2">
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page <= 1"
           @click="page -= 1; load()"
         >
           上一页
         </button>
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors disabled:opacity-50"
           :disabled="page >= totalPages"
           @click="page += 1; load()"
         >

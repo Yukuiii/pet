@@ -123,14 +123,14 @@ onMounted(load)
       </div>
       <div class="flex items-center gap-2">
         <button
-          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          class="h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors"
           :disabled="loading"
           @click="load"
         >
           {{ loading ? '刷新中...' : '刷新' }}
         </button>
         <button
-          class="h-10 px-4 rounded-lg bg-gray-900 text-sm text-white hover:bg-gray-800 transition-colors disabled:opacity-50"
+          class="h-10 px-4 rounded-lg bg-cyan-600 text-sm text-white hover:bg-cyan-500 transition-colors disabled:opacity-50"
           :disabled="saving"
           @click="save"
         >
@@ -153,7 +153,7 @@ onMounted(load)
           v-model="form.siteName"
           type="text"
           placeholder="例如：宠物管理系统"
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
       </div>
       <div class="space-y-1.5">
@@ -170,7 +170,7 @@ onMounted(load)
             <span v-else class="text-xs text-gray-400">无 Logo</span>
           </div>
           <!-- 上传按钮 -->
-          <label class="inline-flex items-center h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
+          <label class="inline-flex items-center h-10 px-4 rounded-lg bg-white border border-gray-200 text-sm text-gray-700 hover:bg-cyan-50 transition-colors cursor-pointer">
             <input
               type="file"
               accept="image/*"
@@ -187,7 +187,7 @@ onMounted(load)
           v-model="form.contactEmail"
           type="text"
           placeholder="support@example.com"
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
       </div>
       <div class="space-y-1.5">
@@ -196,7 +196,7 @@ onMounted(load)
           v-model="form.contactPhone"
           type="text"
           placeholder="可选"
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
       </div>
       <div class="space-y-1.5">
@@ -205,7 +205,7 @@ onMounted(load)
           v-model="form.icp"
           type="text"
           placeholder="可选"
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
       </div>
       <div class="space-y-1.5">
@@ -214,7 +214,7 @@ onMounted(load)
           v-model="form.footerText"
           type="text"
           placeholder="可选"
-          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white focus:border-transparent transition-all"
+          class="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white focus:border-transparent transition-all"
         />
       </div>
     </div>
