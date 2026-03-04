@@ -1,25 +1,16 @@
 <script setup>
-import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
 const route = useRoute()
-
-const me = computed(() => {
-  const userStr = localStorage.getItem('user')
-  if (!userStr) return null
-  try {
-    return JSON.parse(userStr)
-  } catch (e) {
-    return null
-  }
-})
+const { user: me, clearUser } = useUserStore()
 
 /**
  * 退出登录
  */
 const logout = () => {
-  localStorage.removeItem('user')
+  clearUser()
   router.replace('/login')
 }
 

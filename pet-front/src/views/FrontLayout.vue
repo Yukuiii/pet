@@ -1,28 +1,16 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteConfig } from '@/api/siteConfig'
 import { FRONT_NAV } from '@/constants/frontNav'
 import { getMediaUrl } from '@/utils/url'
+import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
 const route = useRoute()
+const { user: me, clearUser } = useUserStore()
 
 const siteConfig = ref(null)
-
-/**
- * 当前登录用户信息
- * @returns {object|null} 用户对象
- */
-const me = computed(() => {
-  const userStr = localStorage.getItem('user')
-  if (!userStr) return null
-  try {
-    return JSON.parse(userStr)
-  } catch (e) {
-    return null
-  }
-})
 
 /**
  * 加载站点基础配置
@@ -41,7 +29,7 @@ const loadSiteConfig = async () => {
  * 退出登录
  */
 const logout = () => {
-  localStorage.removeItem('user')
+  clearUser()
   router.replace('/login')
 }
 

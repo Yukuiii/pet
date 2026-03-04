@@ -1,22 +1,14 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { latestAnnouncement } from '@/api/announcement'
 import { getSiteConfig } from '@/api/siteConfig'
 import { listPosts } from '@/api/community'
 import { getMediaUrl } from '@/utils/url'
+import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
-
-const userStr = ref(localStorage.getItem('user') || '')
-const user = computed(() => {
-  if (!userStr.value) return null
-  try {
-    return JSON.parse(userStr.value)
-  } catch (e) {
-    return null
-  }
-})
+const { user } = useUserStore()
 
 const toProfile = () => router.push('/profile')
 

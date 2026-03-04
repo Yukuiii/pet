@@ -3,8 +3,10 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getMe, updatePassword, updateProfile, uploadAvatar } from '@/api/user'
 import { getMediaUrl } from '@/utils/url'
+import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
+const { user: storeUser, setUser, clearUser } = useUserStore()
 
 const loading = ref(false)
 const savingProfile = ref(false)
@@ -36,7 +38,7 @@ const loadMe = async () => {
     if (res.code === 200) {
       user.value = res.data
       form.value.nickname = res.data?.nickname || ''
-      localStorage.setItem('user', JSON.stringify(res.data))
+      setUser(res.data)
     } else {
       errorMsg.value = res.message || '获取用户信息失败'
     }
@@ -48,20 +50,13 @@ const loadMe = async () => {
 }
 
 const ensureLogin = () => {
-  const userStr = localStorage.getItem('user')
-  if (!userStr) {
+  if (!storeUser.value) {
     router.replace('/login')
     return false
   }
-  try {
-    user.value = JSON.parse(userStr)
-    form.value.nickname = user.value?.nickname || ''
-    return true
-  } catch (e) {
-    localStorage.removeItem('user')
-    router.replace('/login')
-    return false
-  }
+  user.value = storeUser.value
+  form.value.nickname = user.value?.nickname || ''
+  return true
 }
 
 const handleSaveProfile = async () => {
@@ -77,7 +72,7 @@ const handleSaveProfile = async () => {
     const res = await updateProfile({ nickname })
     if (res.code === 200) {
       user.value = res.data
-      localStorage.setItem('user', JSON.stringify(res.data))
+      setUser(res.data)
       successMsg.value = '个人信息已更新'
     } else {
       errorMsg.value = res.message || '更新失败'
@@ -99,7 +94,7 @@ const handleAvatarChange = async (event) => {
     const res = await uploadAvatar(file)
     if (res.code === 200) {
       user.value = res.data
-      localStorage.setItem('user', JSON.stringify(res.data))
+      setUser(res.data)
       successMsg.value = '头像已更新'
     } else {
       errorMsg.value = res.message || '头像上传失败'
@@ -155,7 +150,7 @@ const handleSavePassword = async () => {
 }
 
 const logout = () => {
-  localStorage.removeItem('user')
+  clearUser()
   router.replace('/login')
 }
 

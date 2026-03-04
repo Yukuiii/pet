@@ -5,8 +5,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/api/user'
+import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
+const { setUser } = useUserStore()
 
 /** 表单数据 */
 const form = ref({
@@ -30,8 +32,8 @@ const handleSubmit = async () => {
   try {
     const res = await login(form.value)
     if (res.code === 200) {
-      // 保存用户信息到 localStorage
-      localStorage.setItem('user', JSON.stringify(res.data))
+      // 保存用户信息到响应式 store
+      setUser(res.data)
       if (form.value.loginRole === 'admin') {
         router.push('/admin/users')
       } else {
