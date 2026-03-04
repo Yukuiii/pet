@@ -57,9 +57,9 @@ onMounted(loadSiteConfig)
 
 <template>
   <div class="min-h-screen bg-transparent">
-    <div class="w-full px-3 py-4 sm:px-4 lg:px-5 lg:py-6">
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
-        <aside class="h-full rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-[1px]">
+	    <div class="w-full px-3 py-4 sm:px-4 lg:px-5 lg:py-6">
+	      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
+	        <aside class="h-full rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-[1px]">
           <div class="flex items-center gap-3">
             <img
               v-if="siteConfig?.logo"
@@ -128,10 +128,22 @@ onMounted(loadSiteConfig)
           </div>
         </aside>
 
-        <main class="min-w-0">
-          <router-view />
-        </main>
-      </div>
-    </div>
-  </div>
-</template>
+	        <main class="min-w-0">
+	          <router-view />
+	        </main>
+	      </div>
+
+	      <footer
+	        v-if="siteConfig"
+	        class="mt-6 rounded-2xl border border-slate-200 bg-white/90 p-5 text-xs text-slate-500 shadow-sm backdrop-blur-[1px]"
+	      >
+	        <div class="flex flex-wrap items-center gap-x-6 gap-y-1">
+	          <div v-if="siteConfig.contactEmail">联系邮箱：{{ siteConfig.contactEmail }}</div>
+	          <div v-if="siteConfig.contactPhone">联系电话：{{ siteConfig.contactPhone }}</div>
+	          <div v-if="siteConfig.icp">备案号：{{ siteConfig.icp }}</div>
+	        </div>
+	        <div v-if="siteConfig.footerText" class="mt-2 text-slate-400">{{ siteConfig.footerText }}</div>
+	      </footer>
+	    </div>
+	  </div>
+	</template>

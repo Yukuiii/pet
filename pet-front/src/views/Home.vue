@@ -1,14 +1,45 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { latestAnnouncement } from '@/api/announcement'
-import { getSiteConfig } from '@/api/siteConfig'
 import { listPosts } from '@/api/community'
 import { getMediaUrl } from '@/utils/url'
 import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
 const { user } = useUserStore()
+
+/**
+ * 首页欢迎标题
+ * 登录后显示：欢迎回来，{用户名}
+ * @returns {import('vue').ComputedRef<string>} 欢迎标题文案
+ */
+const welcomeTitle = computed(() => {
+  const username = user.value?.username
+  if (!username) return '欢迎回来'
+  return `欢迎回来，${username}`
+})
+
+/**
+ * 格式化日期为中文（含星期）
+ * @param {Date} date - 日期对象
+ * @returns {string} 例如：2026年3月4日，星期三
+ */
+const formatDateWithWeek = (date) => {
+  if (!(date instanceof Date) || isNaN(date.getTime())) return ''
+  const weekMap = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const week = weekMap[date.getDay()] || ''
+  return `${year}年${month}月${day}日，${week}`
+}
+
+/**
+ * 标题下方日期文案（基于浏览器当前日期）
+ * @returns {import('vue').ComputedRef<string>} 日期文案
+ */
+const todayText = computed(() => formatDateWithWeek(new Date()))
 
 const toProfile = () => router.push('/profile')
 
@@ -22,18 +53,7 @@ const loadLatest = async () => {
   } catch (e) {}
 }
 
-const siteConfig = ref(null)
-const loadSiteConfig = async () => {
-  try {
-    const res = await getSiteConfig()
-    if (res.code === 200) {
-      siteConfig.value = res.data
-    }
-  } catch (e) {}
-}
-
 onMounted(loadLatest)
-onMounted(loadSiteConfig)
 
 const posts = ref([])
 const postsLoading = ref(false)
@@ -90,15 +110,16 @@ const formatTime = (timeStr) => {
 
 <template>
   <div class="space-y-6">
-    <section class="rounded-2xl border border-slate-200 bg-white p-6">
-      <div class="flex items-start gap-4">
-        <div>
-          <h1 class="text-2xl font-semibold text-slate-900">欢迎回来</h1>
-          <p class="mt-1 text-sm text-slate-500">
-            {{ user ? `今天也和 ${user.nickname || user.username} 一起照顾好毛孩子。` : '登录后开启完整的宠物管理体验。' }}
-          </p>
-        </div>
-      </div>
+	    <section class="rounded-2xl border border-slate-200 bg-white p-6">
+	      <div class="flex items-start gap-4">
+	        <div>
+	          <h1 class="text-2xl font-semibold text-slate-900">{{ welcomeTitle }}</h1>
+	          <p class="mt-1 text-xs text-slate-500">{{ todayText }}</p>
+	          <p class="mt-2 text-sm text-slate-500">
+	            {{ user ? `今天也和 ${user.nickname || user.username} 一起照顾好毛孩子。` : '登录后开启完整的宠物管理体验。' }}
+	          </p>
+	        </div>
+	      </div>
 
       <div class="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-[1.2fr_1fr]">
         <div
@@ -140,24 +161,15 @@ const formatTime = (timeStr) => {
               编辑资料
             </button>
           </div>
-        </div>
-        <div
-          v-else
-          class="rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600"
-        >
-          先登录后即可使用个人信息管理功能，并同步你的宠物档案数据。
-        </div>
-
-        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-          <div v-if="siteConfig" class="space-y-1 text-xs text-slate-500">
-            <div v-if="siteConfig.contactEmail">联系邮箱：{{ siteConfig.contactEmail }}</div>
-            <div v-if="siteConfig.contactPhone">联系电话：{{ siteConfig.contactPhone }}</div>
-            <div v-if="siteConfig.icp">备案号：{{ siteConfig.icp }}</div>
-            <div v-if="siteConfig.footerText">{{ siteConfig.footerText }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
+	        </div>
+	        <div
+	          v-else
+	          class="rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600"
+	        >
+	          先登录后即可使用个人信息管理功能，并同步你的宠物档案数据。
+	        </div>
+	      </div>
+	    </section>
 
     <section class="rounded-2xl border border-slate-200 bg-white p-6">
       <div class="mb-4 flex items-center justify-between">
