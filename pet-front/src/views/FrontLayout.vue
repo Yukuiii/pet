@@ -56,13 +56,13 @@ onMounted(loadSiteConfig)
 </script>
 
 <template>
-  <div class="min-h-screen bg-transparent">
-	    <div class="w-full px-3 py-4 sm:px-4 lg:px-5 lg:py-6">
-	      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
+  <div class="min-h-screen bg-transparent flex flex-col">
+	    <div class="w-full flex-1 px-3 py-4 sm:px-4 lg:px-5 lg:py-6 flex flex-col">
+	      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr] flex-1">
 	        <aside class="h-full rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-sm backdrop-blur-[1px]">
-          <div class="flex items-center gap-3">
-            <img
-              v-if="siteConfig?.logo"
+	          <div class="flex items-center gap-3">
+	            <img
+	              v-if="siteConfig?.logo"
               :src="getMediaUrl(siteConfig.logo)"
               alt="Logo"
               class="h-10 w-10 rounded-lg object-cover"
